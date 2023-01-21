@@ -112,4 +112,13 @@ public class SwerveSubsystem extends SubsystemBase {
         backLeft.setDesiredState(desiredStates[2]);
         backRight.setDesiredState(desiredStates[3]);
     }
+
+    public double[] getAbsolutePositions() {
+        return new double[] {
+                frontLeft.getAbsoluteEncoderRad(),
+                frontRight.getAbsoluteEncoderRad(),
+                backLeft.getAbsoluteEncoderRad(),
+                backRight.getAbsoluteEncoderRad()
+        };
+    }
 }

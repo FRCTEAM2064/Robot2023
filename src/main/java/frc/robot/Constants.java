@@ -31,7 +31,7 @@ public final class Constants {
                 new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
                 new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
 
-                //CAN ports are set
+        // CAN ports are set
 
         public static final int kFrontLeftDriveMotorPort = 16;
         public static final int kBackLeftDriveMotorPort = 15;
@@ -53,7 +53,7 @@ public final class Constants {
         public static final boolean kFrontRightDriveEncoderReversed = false;
         public static final boolean kBackRightDriveEncoderReversed = false;
 
-        //Encoders are set: Need to plug in front right
+        // Encoders are set: Need to plug in front right
 
         public static final int kFrontLeftDriveAbsoluteEncoderPort = 2;
         public static final int kBackLeftDriveAbsoluteEncoderPort = 1;
@@ -65,10 +65,10 @@ public final class Constants {
         public static final boolean kFrontRightDriveAbsoluteEncoderReversed = false;
         public static final boolean kBackRightDriveAbsoluteEncoderReversed = false;
 
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = -0.254;
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = -1.252;
-        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -1.816;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = -4.811;
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 3.369;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 0.32099;
+        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 4.907;
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 4.664;
 
         public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
