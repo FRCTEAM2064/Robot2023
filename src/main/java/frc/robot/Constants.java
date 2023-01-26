@@ -21,9 +21,9 @@ public final class Constants {
     public static final class DriveConstants {
         // distances are set
 
-        public static final double kTrackWidth = Units.inchesToMeters(19.5);
+        public static final double kTrackWidth = Units.inchesToMeters(23);
         // Distance between right and left wheels
-        public static final double kWheelBase = Units.inchesToMeters(8.5);
+        public static final double kWheelBase = Units.inchesToMeters(23);
         // Distance between front and back wheels
         public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
                 new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
@@ -48,12 +48,10 @@ public final class Constants {
         public static final boolean kFrontRightTurningEncoderReversed = true;
         public static final boolean kBackRightTurningEncoderReversed = true;
 
-        public static final boolean kFrontLeftDriveEncoderReversed = true;
+        public static final boolean kFrontLeftDriveEncoderReversed = false;
         public static final boolean kBackLeftDriveEncoderReversed = true;
         public static final boolean kFrontRightDriveEncoderReversed = false;
-        public static final boolean kBackRightDriveEncoderReversed = false;
-
-        // Encoders are set: Need to plug in front right
+        public static final boolean kBackRightDriveEncoderReversed = true;
 
         public static final int kFrontLeftDriveAbsoluteEncoderPort = 2;
         public static final int kBackLeftDriveAbsoluteEncoderPort = 1;
@@ -74,8 +72,8 @@ public final class Constants {
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;
-        public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = //
-                kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
+        public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond
+                / 4;
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
     }
@@ -98,6 +96,7 @@ public final class Constants {
 
     public static final class OIConstants {
         public static final int kDriverControllerPort = 0;
+        public static final int kDriverTurnControllerPort = 1;
 
         public static final int kDriverYAxis = 1;
         public static final int kDriverXAxis = 0;

@@ -19,21 +19,22 @@ public class RobotContainer {
 
         private final Vision visionSubsystem = new Vision();
 
-        private final XboxController driverJoystick = new XboxController(OIConstants.kDriverControllerPort);
+        private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
+        private final Joystick driverTurnJoystick = new Joystick(OIConstants.kDriverControllerPort);
 
         public RobotContainer() {
                 swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(
                                 swerveSubsystem,
-                                () -> -driverJoystick.getLeftY(),
-                                () -> driverJoystick.getLeftX(),
-                                () -> driverJoystick.getRightX(),
-                                () -> !driverJoystick.getBButton()));
+                                () -> -driverJoystick.getRawAxis(0), // X axis
+                                () -> driverJoystick.getRawAxis(1), // y axis
+                                () -> driverTurnJoystick.getRawAxis(0), // turning speed
+                                () -> !driverJoystick.getRawButton(1)));
 
                 configureButtonBindings();
         }
 
         private void configureButtonBindings() {
-                new JoystickButton(driverJoystick, 2).onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading()));
+                new JoystickButton(driverJoystick, 1).onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading()));
         }
 
         public Command getAutonomousCommand() {
