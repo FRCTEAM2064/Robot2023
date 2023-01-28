@@ -4,9 +4,20 @@
 
 package frc.robot;
 
+import java.io.File;
+
+import java.util.HashMap;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.utils.Log;
+
+import frc.robot.Constants.*;
+
+import io.github.oblarg.oblog.Logger;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,6 +33,11 @@ public class Robot extends TimedRobot {
 
     private RobotContainer m_robotContainer;
 
+    private static String kDefaultAuto;
+    private static String[] paths;
+    private String m_autoSelected;
+    private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
     /**
      * This function is run when the robot is first started up and should be used
      * for any
@@ -33,6 +49,20 @@ public class Robot extends TimedRobot {
         // and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+
+        paths = this.getPaths();
+        if (paths.length > 0) {
+            kDefaultAuto = paths[0];
+
+            for (String path : paths) {
+                Log.info("Loading path: " + path);
+                m_chooser.addOption(path, path);
+            }
+            m_chooser.setDefaultOption(kDefaultAuto, kDefaultAuto);
+        }
+        SmartDashboard.putData("Autonomous Selection", m_chooser);
+
+        Logger.configureLoggingAndConfig(this, false);
     }
 
     /**
@@ -56,6 +86,8 @@ public class Robot extends TimedRobot {
         // robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+        Logger.updateEntries();
+
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
@@ -73,11 +105,23 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+        HashMap<String, Command> eventMap = new HashMap<String, Command>();
+        // eventMap.put("intake", new IntakeCommand())
+
+        m_autoSelected = m_chooser.getSelected();
+
+        try {
+            m_autonomousCommand = m_robotContainer.getAutonomousCommand(m_autoSelected, eventMap);
+        } catch (Exception e) {
+            Log.error("Error loading autonomous command: " + e.getMessage());
+            e.printStackTrace();
+        }
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
+        } else {
+            System.out.println("No auto selected or failed to run");
         }
     }
 
@@ -111,5 +155,26 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during test mode. */
     @Override
     public void testPeriodic() {
+    }
+
+    private String[] getPaths() {
+        // read the autos folder and get all the classes
+        // return them in an array
+
+        File dir = new File("src/main/deploy/pathplanner");
+        File[] directoryListing = dir.listFiles();
+        if (directoryListing == null) {
+            return new String[0];
+        }
+
+        String[] paths = new String[directoryListing.length];
+        for (int i = 0; i < directoryListing.length; i++) {
+            String name = directoryListing[i].getName();
+            if (name.endsWith(".path")) {
+                paths[i] = name.substring(0, name.length() - 5);
+                Log.info("Found path: " + paths[i]);
+            }
+        }
+        return paths;
     }
 }

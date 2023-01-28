@@ -96,6 +96,12 @@ public class SwerveSubsystem extends SubsystemBase {
         odometer.update(getRotation2d(), positions);
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+
+        double[] arr = getAbsolutePositions();
+        SmartDashboard.putNumber("Front Left Turn Encoder", arr[0]);
+        SmartDashboard.putNumber("Front Right Turn Encoder", arr[1]);
+        SmartDashboard.putNumber("Back Left Turn Encoder", arr[2]);
+        SmartDashboard.putNumber("Back Right Turn Encoder", arr[3]);
     }
 
     public void stopModules() {
