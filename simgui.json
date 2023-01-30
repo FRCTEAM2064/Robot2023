@@ -1,0 +1,25 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Autonomous Selection": "String Chooser",
+      "/SmartDashboard/PPSwerveControllerCommand_field": "Field2d"
+    }
+  },
+  "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
+    "Retained Values": {
+      "open": false
+    },
+    "transitory": {
+      "SmartDashboard": {
+        "Autonomous Selection": {
+          "open": true
+        },
+        "open": true
+      }
+    }
+  }
+}

@@ -12,8 +12,10 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class SwerveSubsystem extends SubsystemBase {
+public class SwerveSubsystem extends SubsystemBase implements Loggable {
     private final SwerveModule frontLeft = new SwerveModule(
             DriveConstants.kFrontLeftDriveMotorPort,
             DriveConstants.kFrontLeftTurningMotorPort,
@@ -75,7 +77,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public Rotation2d getRotation2d() {
-        return Rotation2d.fromDegrees(getHeading());
+        return Rotation2d.fromDegrees(getHeading()).minus(Rotation2d.fromDegrees(90));
     }
 
     public Pose2d getPose() {
@@ -96,6 +98,12 @@ public class SwerveSubsystem extends SubsystemBase {
         odometer.update(getRotation2d(), positions);
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+
+        double[] arr = getAbsolutePositions();
+        SmartDashboard.putNumber("Front Left Turn Encoder", arr[0]);
+        SmartDashboard.putNumber("Front Right Turn Encoder", arr[1]);
+        SmartDashboard.putNumber("Back Left Turn Encoder", arr[2]);
+        SmartDashboard.putNumber("Back Right Turn Encoder", arr[3]);
     }
 
     public void stopModules() {

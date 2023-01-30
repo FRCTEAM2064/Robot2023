@@ -1,5 +1,4 @@
 
-
 package frc.robot.commands;
 
 import java.util.function.Supplier;
@@ -44,12 +43,13 @@ public class SwerveJoystickCmd extends CommandBase {
         double ySpeed = ySpdFunction.get();
         double turningSpeed = turningSpdFunction.get();
 
-        // 2. Apply deadband
+        // 2. Apply deadband (tolerance - only move robot if faster than minimum speed
+        // to account for joystick drift and stuff)
         xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed : 0.0;
         ySpeed = Math.abs(ySpeed) > OIConstants.kDeadband ? ySpeed : 0.0;
         turningSpeed = Math.abs(turningSpeed) > OIConstants.kDeadband ? turningSpeed : 0.0;
 
-        // 3. Make the driving smoother
+        // 3. calculate actual speeds to send to bot
         xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
         ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
         turningSpeed = turningLimiter.calculate(turningSpeed)

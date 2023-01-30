@@ -23,7 +23,7 @@ public class TurnToBestTag extends PIDCommand {
         // The controller that the command will use
         new PIDController(0.3, 0, 0),
         // This should return the measurement
-        () -> visionSubsystem.getBestTarget().getYaw(),
+        () -> visionSubsystem.getTargetX(),
         // This should return the setpoint (can also be a constant)
         0,
         // This uses the output
