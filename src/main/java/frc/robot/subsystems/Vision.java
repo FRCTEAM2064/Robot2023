@@ -4,40 +4,49 @@
 
 package frc.robot.subsystems;
 
-import org.photonvision.PhotonCamera;
-import org.photonvision.targeting.*;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Vision extends SubsystemBase {
-
-  private PhotonCamera camera;
+  NetworkTable table;
+  NetworkTableEntry tx;
+  NetworkTableEntry ty;
+  NetworkTableEntry ta;
+  NetworkTableEntry fid;
 
   /** Creates a new Vision. */
   public Vision() {
-    try {
-      camera = new PhotonCamera("Global_Shutter_Camera");
-    } catch (Exception e) {
-      System.out.println("L");
-    }
+    table = NetworkTableInstance.getDefault().getTable("limelight");
+    tx = table.getEntry("tx");
+    ty = table.getEntry("ty");
+    ta = table.getEntry("ta");
+    fid = table.getEntry("tv");
   }
 
   @Override
   public void periodic() {
-    if (camera == null) {
-      return;
-    }
-    if (camera.getLatestResult() != null && camera.getLatestResult().getBestTarget() != null) {
-      SmartDashboard.putNumber("Best Target Yaw", camera.getLatestResult().getBestTarget().getYaw());
-    }
+    SmartDashboard.putNumber("LimelightX", tx.getDouble(0.0));
+    SmartDashboard.putNumber("LimelightY", ty.getDouble(0.0));
+    SmartDashboard.putNumber("LimelightArea", ta.getDouble(0.0));
+    SmartDashboard.putNumber("LimelightFid", fid.getDouble(0.0));
   }
 
-  public PhotonPipelineResult getLatestResult() {
-    return camera.getLatestResult();
+  public double getTagID() {
+    return fid.getDouble(0.0);
   }
 
-  public PhotonTrackedTarget getBestTarget() {
-    return getLatestResult().getBestTarget();
+  public double getTargetX() {
+    return tx.getDouble(0.0);
+  }
+
+  public double getTargetY() {
+    return ty.getDouble(0.0);
+  }
+
+  public double getTargetArea() {
+    return ta.getDouble(0.0);
   }
 }

@@ -14,8 +14,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import io.github.oblarg.oblog.Loggable;
 
-public class RobotContainer {
+public class RobotContainer implements Loggable {
 
         private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
@@ -27,7 +28,7 @@ public class RobotContainer {
         public RobotContainer() {
                 swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(
                                 swerveSubsystem,
-                                () -> -driverJoystick.getRawAxis(0), // X axis
+                                () -> driverJoystick.getRawAxis(0), // X axis
                                 () -> driverJoystick.getRawAxis(1), // y axis
                                 () -> driverTurnJoystick.getRawAxis(0), // turning speed
                                 () -> !driverJoystick.getRawButton(1)));
