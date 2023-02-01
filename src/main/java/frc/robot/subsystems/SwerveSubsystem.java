@@ -77,7 +77,7 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
     }
 
     public Rotation2d getRotation2d() {
-        return Rotation2d.fromDegrees(getHeading()).minus(Rotation2d.fromDegrees(90));
+        return Rotation2d.fromDegrees(getHeading()).plus(Rotation2d.fromDegrees(90));
     }
 
     public Pose2d getPose() {
