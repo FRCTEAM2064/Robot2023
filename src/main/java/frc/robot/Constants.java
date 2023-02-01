@@ -64,8 +64,8 @@ public final class Constants implements Loggable {
         public static final boolean kFrontRightDriveAbsoluteEncoderReversed = false;
         public static final boolean kBackRightDriveAbsoluteEncoderReversed = false;
 
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 4.7;
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 1.8;
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 4.8;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 1.77;
         public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 6.2;
         public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 0.6;
 

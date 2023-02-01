@@ -33,7 +33,7 @@ public class RobotContainer implements Loggable {
                                 swerveSubsystem,
                                 () -> driverJoystick.getRawAxis(0), // X axis
                                 () -> driverJoystick.getRawAxis(1), // y axis
-                                () -> driverTurnJoystick.getRawAxis(0), // turning speed
+                                () -> -driverTurnJoystick.getRawAxis(0), // turning speed
                                 () -> !driverJoystick.getRawButton(1)));
 
                 configureButtonBindings();
