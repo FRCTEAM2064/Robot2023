@@ -11,19 +11,19 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.LimeLight;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TurnToBestTag extends PIDCommand {
   /** Creates a new TurnToBestTag. */
-  public TurnToBestTag(SwerveSubsystem swerveSubsystem, Vision visionSubsystem) {
+  public TurnToBestTag(SwerveSubsystem swerveSubsystem, LimeLight visionSubsystem) {
     super(
         // The controller that the command will use
         new PIDController(0.3, 0, 0),
         // This should return the measurement
-        () -> visionSubsystem.getTargetX(),
+        () -> visionSubsystem.getdegRotationToTarget(),
         // This should return the setpoint (can also be a constant)
         0,
         // This uses the output

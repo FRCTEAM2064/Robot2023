@@ -80,7 +80,7 @@ public final class Constants implements Loggable {
     }
 
     public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = DriveConstants.kPhysicalMaxSpeedMetersPerSecond / 4;
+        public static final double kMaxSpeedMetersPerSecond = DriveConstants.kPhysicalMaxSpeedMetersPerSecond / 8;
         public static final double kMaxAngularSpeedRadiansPerSecond = //
                 DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond / 10;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
@@ -98,6 +98,22 @@ public final class Constants implements Loggable {
     public static final class OIConstants {
         public static final int kDriverControllerPort = 0;
         public static final int kDriverTurnControllerPort = 1;
+        public static final int kPXNControllerPort = 2;
+
+        public static final class pxnButtons {
+            public static final int L1 = 5;
+            public static final int L2 = 7;
+            public static final int R1 = 6;
+            public static final int R2 = 8;
+            public static final int A = 2;
+            public static final int B = 3;
+            public static final int X = 1;
+            public static final int Y = 4;
+            public static final int Share = 7;
+            public static final int Options = 8;
+            public static final int L3 = 9;
+            public static final int R3 = 10;
+        }
 
         public static final int kDriverYAxis = 1;
         public static final int kDriverXAxis = 0;

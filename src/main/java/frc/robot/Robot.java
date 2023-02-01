@@ -5,9 +5,10 @@
 package frc.robot;
 
 import java.io.File;
-
+import java.nio.file.FileSystem;
 import java.util.HashMap;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -161,7 +162,7 @@ public class Robot extends TimedRobot {
         // read the autos folder and get all the classes
         // return them in an array
 
-        File dir = new File("src/main/deploy/pathplanner");
+        File dir = new File(Filesystem.getDeployDirectory() + "/pathplanner");
         File[] directoryListing = dir.listFiles();
         if (directoryListing == null) {
             return new String[0];
