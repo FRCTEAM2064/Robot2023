@@ -39,6 +39,10 @@ public class Intake extends SubsystemBase implements Loggable {
   }
 
   public void toggle() {
-    intakeSolenoid.toggle();
+    if (intakeSolenoid.get() == kForward) {
+      retract();
+    } else {
+      extend();
+    }
   }
 }
