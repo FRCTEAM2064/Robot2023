@@ -40,8 +40,10 @@ public class RobotContainer implements Loggable {
         }
 
         private void configureButtonBindings() {
-                new JoystickButton(driverJoystick, 1).onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading()));
+                // new JoystickButton(driverJoystick, 1).onTrue(new InstantCommand(() ->
+                // swerveSubsystem.zeroHeading()));
                 new JoystickButton(pxnController, pxnButtons.X).onTrue(new InstantCommand(() -> intake.toggle()));
+                new JoystickButton(pxnController, pxnButtons.A).onTrue(new TurnToBestTag(swerveSubsystem, limeLight));
         }
 
         public Command getAutonomousCommand(String pathName, HashMap<String, Command> eventMap) {

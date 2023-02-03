@@ -11,13 +11,15 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.subsystems.ControlMode.*;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
 /**
  * Lime Light Class was started by Corey Applegate of Team 3244
  * Granite City Gearheads. We Hope you Enjoy the Lime Light
  * Camera.
  */
-public class LimeLight {
+public class LimeLight implements Loggable {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -92,6 +94,7 @@ public class LimeLight {
      * 
      * @return
      */
+    @Log
     public double getdegRotationToTarget() {
         NetworkTableEntry tx = m_table.getEntry("tx");
         double x = tx.getDouble(0.0);

@@ -11,6 +11,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.utils.Log;
 import frc.robot.subsystems.LimeLight;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -30,26 +31,28 @@ public class TurnToBestTag extends PIDCommand {
         output -> {
           SlewRateLimiter turningLimiter = new SlewRateLimiter(
               DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
-          double turningSpeed = turningLimiter.calculate(output)
+          double turningSpeed = turningLimiter.calculate(-output)
               * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
 
           // 4. Construct desired chassis speeds
           ChassisSpeeds chassisSpeeds;
           // Relative to robot
           chassisSpeeds = new ChassisSpeeds(0, 0, turningSpeed);
+          Log.info("TURNING" + -output);
 
           // 5. Convert chassis speeds to individual module states
           SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
           // 6. Output each module states to wheels
           swerveSubsystem.setModuleStates(moduleStates);
-        });
-    addRequirements(swerveSubsystem);
+        },
+        swerveSubsystem);
+    getController().setTolerance(0.3, 0.05);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return getController().atSetpoint();
   }
 }
