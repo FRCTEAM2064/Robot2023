@@ -122,4 +122,14 @@ public final class Constants implements Loggable {
 
         public static final double kDeadband = 0.05;
     }
+
+    public static final class PancakeConstants {
+        public static final int rotationPort = 0; // TODO: add port
+        public static final int tiltPort = 0; // TODO: add port
+        public static final double maxRotationSpeed = 0; // TODO: add speed
+        public static final double maxTiltSpeed = 0; // TODO: add speed
+
+        public static final float maxTiltValue = 0; // TODO: add value
+        public static final float minTiltValue = 0; // TODO: add value
+    }
 }
