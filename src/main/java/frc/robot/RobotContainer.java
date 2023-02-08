@@ -14,7 +14,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.Constants.*;
 import frc.robot.Constants.OIConstants.pxnButtons;
-import frc.robot.commands.*;
+import frc.robot.commands.Elevator.LowerElevator;
+import frc.robot.commands.Elevator.RaiseElevator;
+import frc.robot.commands.Pancake.*;
+import frc.robot.commands.Swerve.*;
+import frc.robot.commands.Vision.*;
+import frc.robot.commands.Pancake.RotationJoystickCmd;
+import frc.robot.commands.Swerve.SwerveJoystickCmd;
+import frc.robot.commands.Vision.TurnToBestTag;
 import frc.robot.subsystems.*;
 import io.github.oblarg.oblog.Loggable;
 
@@ -22,7 +29,11 @@ public class RobotContainer implements Loggable {
 
         private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
         private final LimeLight limeLight = new LimeLight();
-        private final Intake intake = new Intake();
+        private final Intake intakeSubsystem = new Intake();
+        private final Pancake pancakeSubsystem = new Pancake();
+        private final Elevator elevatorSubsystem = new Elevator();
+
+        private final ElevatorConstants constants = new ElevatorConstants();
 
         private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
         private final Joystick driverTurnJoystick = new Joystick(OIConstants.kDriverTurnControllerPort);
@@ -35,15 +46,26 @@ public class RobotContainer implements Loggable {
                                 () -> driverJoystick.getRawAxis(1), // y axis
                                 () -> -driverTurnJoystick.getRawAxis(0), // turning speed
                                 () -> !driverJoystick.getRawButton(1)));
-
+                pancakeSubsystem.setDefaultCommand(
+                                new RotationJoystickCmd(pancakeSubsystem, () -> pxnController.getPOV()));
                 configureButtonBindings();
         }
 
         private void configureButtonBindings() {
                 // new JoystickButton(driverJoystick, 1).onTrue(new InstantCommand(() ->
                 // swerveSubsystem.zeroHeading()));
-                new JoystickButton(pxnController, pxnButtons.X).onTrue(new InstantCommand(() -> intake.toggle()));
-                new JoystickButton(pxnController, pxnButtons.A).onTrue(new TurnToBestTag(swerveSubsystem, limeLight));
+                new JoystickButton(pxnController, pxnButtons.X)
+                                .onTrue(new InstantCommand(() -> intakeSubsystem.toggle()));
+                // new JoystickButton(pxnController, pxnButtons.A).onTrue(new
+                // TurnToBestTag(swerveSubsystem, limeLight));
+
+                new JoystickButton(pxnController, pxnButtons.A)
+                                .onTrue(new RaiseElevator(elevatorSubsystem)
+                                                .alongWith(new PrintCommand("going up")));
+                new JoystickButton(pxnController, pxnButtons.B)
+                                .onTrue(new LowerElevator(elevatorSubsystem)
+                                                .alongWith(new PrintCommand("going down")))
+                                .onFalse(new InstantCommand(elevatorSubsystem::stopWinch));
         }
 
         public Command getAutonomousCommand(String pathName, HashMap<String, Command> eventMap) {

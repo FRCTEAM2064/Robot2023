@@ -5,6 +5,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 
 public final class Constants implements Loggable {
 
@@ -102,12 +104,12 @@ public final class Constants implements Loggable {
 
         public static final class pxnButtons {
             public static final int L1 = 5;
-            public static final int L2 = 7;
+            // public static final int L2 = 7; don't use this
             public static final int R1 = 6;
-            public static final int R2 = 8;
-            public static final int A = 2;
-            public static final int B = 3;
-            public static final int X = 1;
+            // public static final int R2 = 8; don't use this
+            public static final int A = 1;
+            public static final int B = 2;
+            public static final int X = 3;
             public static final int Y = 4;
             public static final int Share = 7;
             public static final int Options = 8;
@@ -124,12 +126,41 @@ public final class Constants implements Loggable {
     }
 
     public static final class PancakeConstants {
-        public static final int rotationPort = 0; // TODO: add port
-        public static final int tiltPort = 0; // TODO: add port
-        public static final double maxRotationSpeed = 0; // TODO: add speed
-        public static final double maxTiltSpeed = 0; // TODO: add speed
+        public static final int rotationPort = 10;
+        public static final int tiltPort = 19;
+        public static final double rotationSpeed = 0.1;
+        public static final double tiltSpeed = 0.4;
 
-        public static final float maxTiltValue = 0; // TODO: add value
-        public static final float minTiltValue = 0; // TODO: add value
+        public static final float maxTiltValue = 2; // TODO: add value
+        public static final float minTiltValue = -2; // TODO: add value
+    }
+
+    public static final class ElevatorConstants implements Loggable {
+        public static final int winchPort = 12;
+        public static final double winchSpeed = 0.8;
+
+        public static final float winchMax = 30;
+
+        @Log
+        public static double winchP = 0.1;
+        @Log
+        public static double winchI = 0;
+        @Log
+        public static double winchD = 0;
+
+        @Config
+        public void setWinchP(double p) {
+            ElevatorConstants.winchP = p;
+        }
+
+        @Config
+        public void setWinchI(double i) {
+            ElevatorConstants.winchI = i;
+        }
+
+        @Config
+        public void setWinchD(double d) {
+            ElevatorConstants.winchD = d;
+        }
     }
 }

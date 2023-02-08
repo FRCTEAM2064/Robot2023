@@ -10,10 +10,11 @@ import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Constants.PancakeConstants;
-
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Pancake extends SubsystemBase {
+public class Pancake extends SubsystemBase implements Loggable {
   private CANSparkMax rotationMotor, tiltMotor;
   private RelativeEncoder rotationEncoder, tiltEncoder;
 
@@ -27,8 +28,10 @@ public class Pancake extends SubsystemBase {
 
     tiltMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
     tiltMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
-    tiltMotor.setSoftLimit(SoftLimitDirection.kForward, PancakeConstants.maxTiltValue);
-    tiltMotor.setSoftLimit(SoftLimitDirection.kForward, PancakeConstants.minTiltValue);
+    tiltMotor.setSoftLimit(SoftLimitDirection.kForward,
+        PancakeConstants.maxTiltValue);
+    tiltMotor.setSoftLimit(SoftLimitDirection.kReverse,
+        PancakeConstants.minTiltValue);
   }
 
   public void setRotationSpeed(double speed) {
@@ -39,6 +42,7 @@ public class Pancake extends SubsystemBase {
     rotationMotor.set(0);
   }
 
+  @Log
   public double getRotation() {
     return rotationEncoder.getPosition();
   }
@@ -55,6 +59,7 @@ public class Pancake extends SubsystemBase {
     tiltMotor.set(0);
   }
 
+  @Log
   public double getTilt() {
     return tiltEncoder.getPosition();
   }
