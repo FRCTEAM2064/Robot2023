@@ -47,6 +47,7 @@ public class TurnToBestTag extends PIDCommand {
           swerveSubsystem.setModuleStates(moduleStates);
         },
         swerveSubsystem);
+        addRequirements(swerveSubsystem);
     getController().setTolerance(0.3, 0.05);
   }
 
