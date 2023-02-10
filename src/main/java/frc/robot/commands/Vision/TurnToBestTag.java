@@ -38,7 +38,7 @@ public class TurnToBestTag extends PIDCommand {
           ChassisSpeeds chassisSpeeds;
           // Relative to robot
           chassisSpeeds = new ChassisSpeeds(0, 0, turningSpeed);
-          Log.info("TURNING" + -output);
+          Log.info("TURNING" + -output + " " + "SPEED: " + turningSpeed);
 
           // 5. Convert chassis speeds to individual module states
           SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);

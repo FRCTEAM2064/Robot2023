@@ -75,8 +75,7 @@ public final class Constants implements Loggable {
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;
-        public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond
-                / 4;
+        public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
     }
@@ -138,8 +137,12 @@ public final class Constants implements Loggable {
     public static final class ElevatorConstants implements Loggable {
         public static final int winchPort = 12;
         public static final double winchSpeed = 0.8;
+        public static final int gripperPort = 1000;
+        public static final double gripperSpeed = .1;
+
 
         public static final float winchMax = 30;
+        public static final float gripperMax = 1000;
 
         @Log
         public static double winchP = 0.1;
