@@ -11,34 +11,34 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.utils.Log;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 import frc.robot.subsystems.LimeLight;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TurnToBestTag extends PIDCommand {
+public class TurnToBestTag extends PIDCommand implements Loggable {
+  private final SwerveSubsystem swerveSubsystem;
+
   /** Creates a new TurnToBestTag. */
   public TurnToBestTag(SwerveSubsystem swerveSubsystem, LimeLight visionSubsystem) {
     super(
         // The controller that the command will use
-        new PIDController(0.3, 0, 0),
+        new PIDController(0.1, 0, 0),
         // This should return the measurement
         () -> visionSubsystem.getdegRotationToTarget(),
         // This should return the setpoint (can also be a constant)
         0,
         // This uses the output
         output -> {
-          SlewRateLimiter turningLimiter = new SlewRateLimiter(
-              DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
-          double turningSpeed = turningLimiter.calculate(-output)
-              * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
+          double maxSpeed = DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
+          double turningSpeed = Math.copySign(Math.min(Math.abs(output), maxSpeed), output);
 
           // 4. Construct desired chassis speeds
           ChassisSpeeds chassisSpeeds;
           // Relative to robot
-          chassisSpeeds = new ChassisSpeeds(0, 0, turningSpeed);
-          Log.info("TURNING" + -output + " " + "SPEED: " + turningSpeed);
+          chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, turningSpeed, swerveSubsystem.getRotation2d());
 
           // 5. Convert chassis speeds to individual module states
           SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
@@ -47,8 +47,14 @@ public class TurnToBestTag extends PIDCommand {
           swerveSubsystem.setModuleStates(moduleStates);
         },
         swerveSubsystem);
-        addRequirements(swerveSubsystem);
-    getController().setTolerance(0.3, 0.05);
+    this.swerveSubsystem = swerveSubsystem;
+    addRequirements(this.swerveSubsystem);
+    getController().setTolerance(1);
+  }
+
+  @Log
+  public double getPosition() {
+    return getController().getPositionError();
   }
 
   // Returns true when the command should end.
