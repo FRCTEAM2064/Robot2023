@@ -81,4 +81,13 @@ public class Elevator extends SubsystemBase implements Loggable {
     gripperEncoder.setPosition(0);
   }
 
+  public void pinchGripper(){
+    setGripperSpeed(ElevatorConstants.gripperSpeed);
+  }
+
+  public void releaseGripper(){
+    setGripperSpeed(-ElevatorConstants.gripperSpeed);
+  }
+
+
 }

@@ -138,7 +138,7 @@ public final class Constants implements Loggable {
         public static final int winchPort = 12;
         public static final double winchSpeed = 0.8;
         public static final int gripperPort = 1000;
-        public static final double gripperSpeed = .1;
+        public static final double gripperSpeed = 0.1; //TODO: Add value
 
 
         public static final float winchMax = 30;
@@ -146,10 +146,13 @@ public final class Constants implements Loggable {
 
         @Log
         public static double winchP = 0.1;
+        public static double gripperP = 0.1;
         @Log
         public static double winchI = 0;
+        public static double gripperI = 0;
         @Log
         public static double winchD = 0;
+        public static double gripperD = 0;
 
         @Config
         public void setWinchP(double p) {
