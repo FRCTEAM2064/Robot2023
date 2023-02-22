@@ -25,7 +25,6 @@ public class Elevator extends SubsystemBase implements Loggable {
   /** Creates a new Elevator. */
   public Elevator() {
     winchMotor = new CANSparkMax(ElevatorConstants.winchPort, MotorType.kBrushless);
-
     winchEncoder = winchMotor.getEncoder();
 
     winchMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
@@ -65,4 +64,31 @@ public class Elevator extends SubsystemBase implements Loggable {
   public void lowerElevator() {
     setWinchSpeed(-ElevatorConstants.winchSpeed);
   }
+
+  //Methods for gripper control
+  public void setGripperSpeed(double speed){
+    gripperMotor.set(speed);
+  }
+
+  public void stopGripper(){
+    gripperMotor.set(0);
+  }
+
+  public double getGripperPos(){
+    return gripperEncoder.getPosition();
+  }
+
+  public void resetGripperPos(){
+    gripperEncoder.setPosition(0);
+  }
+
+  public void pinchGripper(){
+    setGripperSpeed(ElevatorConstants.gripperSpeed);
+  }
+
+  public void releaseGripper(){
+    setGripperSpeed(-ElevatorConstants.gripperSpeed);
+  }
+
+
 }
