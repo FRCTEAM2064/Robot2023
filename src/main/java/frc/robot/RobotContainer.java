@@ -20,7 +20,6 @@ import frc.robot.commands.Pancake.*;
 import frc.robot.commands.Swerve.*;
 import frc.robot.commands.Vision.*;
 import frc.robot.commands.Pancake.RotationJoystickCmd;
-import frc.robot.commands.Swerve.SwerveJoystickCmd;
 import frc.robot.commands.Vision.TurnToBestTag;
 import frc.robot.subsystems.*;
 import io.github.oblarg.oblog.Loggable;
@@ -34,6 +33,7 @@ public class RobotContainer implements Loggable {
         private final Elevator elevatorSubsystem = new Elevator();
 
         private final ElevatorConstants constants = new ElevatorConstants();
+        private final DriveConstants dConstants = new DriveConstants();
 
         private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
         private final Joystick driverTurnJoystick = new Joystick(OIConstants.kDriverTurnControllerPort);
@@ -45,19 +45,20 @@ public class RobotContainer implements Loggable {
                                 () -> driverJoystick.getRawAxis(0), // X axis
                                 () -> driverJoystick.getRawAxis(1), // y axis
                                 () -> -driverTurnJoystick.getRawAxis(0), // turning speed
-                                () -> !driverJoystick.getRawButton(1)));
+                                () -> !driverJoystick.getRawButton(1), // field oriented button
+                                () -> driverJoystick.getRawButton(1)));
                 pancakeSubsystem.setDefaultCommand(
                                 new RotationJoystickCmd(pancakeSubsystem, () -> pxnController.getPOV()));
                 configureButtonBindings();
         }
 
         private void configureButtonBindings() {
-                // new JoystickButton(driverJoystick, 1).onTrue(new InstantCommand(() ->
-                // swerveSubsystem.zeroHeading()));
+                new JoystickButton(driverTurnJoystick, 1)
+                                .onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading()));
+                new JoystickButton(driverJoystick, 8).whileTrue(new Balance(swerveSubsystem));
                 new JoystickButton(pxnController, pxnButtons.X)
                                 .onTrue(new InstantCommand(() -> intakeSubsystem.toggle()));
-                new JoystickButton(pxnController, pxnButtons.Y).onTrue(new
-                TurnToBestTag(swerveSubsystem, limeLight));
+                new JoystickButton(pxnController, pxnButtons.Y).onTrue(new TurnToBestTag(swerveSubsystem, limeLight));
 
                 new JoystickButton(pxnController, pxnButtons.A)
                                 .onTrue(new RaiseElevator(elevatorSubsystem)

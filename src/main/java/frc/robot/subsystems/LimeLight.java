@@ -10,16 +10,16 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.ControlMode.*;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Log;
+import frc.robot.utils.Log;
 
 /**
  * Lime Light Class was started by Corey Applegate of Team 3244
- * Granite City Gearheads. We Hope you Enjoy the Lime Light
- * Camera.
+ * Granite City Gearheads.
  */
-public class LimeLight implements Loggable {
+public class LimeLight extends SubsystemBase {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -94,7 +94,6 @@ public class LimeLight implements Loggable {
      * 
      * @return
      */
-    @Log
     public double getdegRotationToTarget() {
         NetworkTableEntry tx = m_table.getEntry("tx");
         double x = tx.getDouble(0.0);
@@ -357,5 +356,15 @@ public class LimeLight implements Loggable {
         NetworkTableEntry cyRaw = m_table.getEntry("cy" + Integer.toString(raw.getValue()));
         double y = cyRaw.getDouble(0.0);
         return y;
+    }
+
+    public double[] getTargetPoseInRobotSpace() {
+        NetworkTableEntry pose = m_table.getEntry("botpose");
+        double[] poseArray = pose.getDoubleArray(new double[6]);
+        return poseArray;
+    }
+
+    public double getDistanceFromTag() {
+        return getTargetPoseInRobotSpace()[2];
     }
 }

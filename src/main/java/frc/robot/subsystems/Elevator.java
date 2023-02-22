@@ -36,8 +36,9 @@ public class Elevator extends SubsystemBase implements Loggable {
         (float) winchEncoder.getPosition());
     this.starting = winchEncoder.getPosition();
 
-    gripperMotor = new CANSparkMax(ElevatorConstants.gripperPort, MotorType.kBrushless);
-    gripperEncoder = gripperMotor.getEncoder();
+    // gripperMotor = new CANSparkMax(ElevatorConstants.gripperPort,
+    // MotorType.kBrushless);
+    // gripperEncoder = gripperMotor.getEncoder();
   }
 
   public void setWinchSpeed(double speed) {

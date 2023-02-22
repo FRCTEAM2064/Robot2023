@@ -104,6 +104,10 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
         SmartDashboard.putNumber("Front Right Turn Encoder", arr[1]);
         SmartDashboard.putNumber("Back Left Turn Encoder", arr[2]);
         SmartDashboard.putNumber("Back Right Turn Encoder", arr[3]);
+
+        SmartDashboard.putNumber("Pitch", gyro.getPitch());
+        SmartDashboard.putNumber("Roll", gyro.getRoll());
+        SmartDashboard.putNumber("Yaw", gyro.getYaw());
     }
 
     public void stopModules() {
@@ -128,5 +132,13 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
                 backLeft.getAbsoluteEncoderRad(),
                 backRight.getAbsoluteEncoderRad()
         };
+    }
+
+    public double getPitch() {
+        return gyro.getPitch();
+    }
+
+    public double getRoll() {
+        return gyro.getRoll();
     }
 }
