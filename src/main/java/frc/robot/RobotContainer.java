@@ -15,9 +15,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.*;
 import frc.robot.Constants.OIConstants.pxnButtons;
 import frc.robot.commands.Elevator.LowerElevator;
-import frc.robot.commands.Elevator.PinchGripper;
 import frc.robot.commands.Elevator.RaiseElevator;
-import frc.robot.commands.Elevator.ReleaseGripper;
+import frc.robot.commands.Elevator.*;
 import frc.robot.commands.Pancake.*;
 import frc.robot.commands.Swerve.*;
 import frc.robot.commands.Vision.*;
@@ -71,12 +70,11 @@ public class RobotContainer implements Loggable {
                                 .onFalse(new InstantCommand(elevatorSubsystem::stopWinch));
                 // Control for Gripper
                 new JoystickButton(pxnController, pxnButtons.Y)
-                                .onTrue(new PinchGripper(elevatorSubsystem)
-                                                .alongWith(new PrintCommand("Pinching gripper")))
-                                .onFalse(new InstantCommand(elevatorSubsystem::stopGripper));
+                                .onTrue(new InstantCommand(() -> elevatorSubsystem.setGripperSpeed(ElevatorConstants.gripperSpeed)).until(() -> elevatorSubsystem.getGripperPos() == ElevatorConstants.gripperMin)
+                                                .alongWith(new PrintCommand("Pinching gripper")));
                 new JoystickButton(pxnController, pxnButtons.R1)
-                                .onTrue(new ReleaseGripper(elevatorSubsystem)
-                                                .alongWith(new PrintCommand("Releasing gripper")))
+                                .onTrue(new InstantCommand(() -> elevatorSubsystem.setGripperSpeed(ElevatorConstants.gripperSpeed)).until(() -> elevatorSubsystem.getGripperPos() == ElevatorConstants.gripperMax)
+                                                .alongWith(new PrintCommand("Releasing gripper")));
                                 .onFalse(new InstantCommand(elevatorSubsystem::stopGripper));
         }
 

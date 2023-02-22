@@ -1,4 +1,38 @@
 {
+  "HALProvider": {
+    "Other Devices": {
+      "SPARK MAX [16]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [17]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [19]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [7]": {
+        "header": {
+          "open": true
+        }
+      },
+      "navX-Sensor[0]": {
+        "header": {
+          "open": true
+        }
+      }
+    },
+    "Timing": {
+      "window": {
+        "visible": false
+      }
+    }
+  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
