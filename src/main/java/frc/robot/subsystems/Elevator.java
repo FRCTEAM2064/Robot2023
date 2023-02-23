@@ -74,6 +74,7 @@ public class Elevator extends SubsystemBase implements Loggable {
     gripperMotor.set(0);
   }
 
+  @Log
   public double getGripperPos(){
     return gripperEncoder.getPosition();
   }
