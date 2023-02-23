@@ -165,6 +165,7 @@ public final class Constants implements Loggable {
 
         public static final float winchMax = 30;
         public static final float gripperMax = 1000;
+        public static final float gripperMin = 1000; 
 
         @Log
         public static double winchP = 0.1;
@@ -190,5 +191,13 @@ public final class Constants implements Loggable {
         public void setWinchD(double d) {
             ElevatorConstants.winchD = d;
         }
+    }
+    public static final class IntakeConstants {
+        public static final int leftMotorPort = 99;
+        public static final int rightMotorPort = 99;
+
+        public static final double rightMotorSpeed = 1.5;
+        public static final double leftMotorSpeed = 1.5;
+
     }
 }
