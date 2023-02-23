@@ -70,12 +70,17 @@ public class RobotContainer implements Loggable {
                                 .onFalse(new InstantCommand(elevatorSubsystem::stopWinch));
                 // Control for Gripper
                 new JoystickButton(pxnController, pxnButtons.Y)
-                                .onTrue(new InstantCommand(() -> elevatorSubsystem.setGripperSpeed(ElevatorConstants.gripperSpeed)).until(() -> elevatorSubsystem.getGripperPos() == ElevatorConstants.gripperMin)
+                                .onTrue(new InstantCommand(
+                                                () -> elevatorSubsystem.setGripperSpeed(ElevatorConstants.gripperSpeed))
+                                                .until(() -> elevatorSubsystem
+                                                                .getGripperPos() == ElevatorConstants.gripperMin)
                                                 .alongWith(new PrintCommand("Pinching gripper")));
                 new JoystickButton(pxnController, pxnButtons.R1)
-                                .onTrue(new InstantCommand(() -> elevatorSubsystem.setGripperSpeed(ElevatorConstants.gripperSpeed)).until(() -> elevatorSubsystem.getGripperPos() == ElevatorConstants.gripperMax)
+                                .onTrue(new InstantCommand(
+                                                () -> elevatorSubsystem.setGripperSpeed(ElevatorConstants.gripperSpeed))
+                                                .until(() -> elevatorSubsystem
+                                                                .getGripperPos() == ElevatorConstants.gripperMax)
                                                 .alongWith(new PrintCommand("Releasing gripper")));
-                                .onFalse(new InstantCommand(elevatorSubsystem::stopGripper));
         }
 
         public Command getAutonomousCommand(String pathName, HashMap<String, Command> eventMap) {
