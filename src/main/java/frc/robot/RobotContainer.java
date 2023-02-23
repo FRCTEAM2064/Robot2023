@@ -69,15 +69,24 @@ public class RobotContainer implements Loggable {
                                                 .alongWith(new PrintCommand("going down")))
                                 .onFalse(new InstantCommand(elevatorSubsystem::stopWinch));
                 // Control for Gripper
+                // new JoystickButton(pxnController, pxnButtons.Y)
+                // .onTrue(new InstantCommand(
+                // () -> elevatorSubsystem.setGripperSpeed(ElevatorConstants.gripperSpeed))
+                // .until(() -> elevatorSubsystem
+                // .getGripperPos() == ElevatorConstants.gripperMin)
+                // .alongWith(new PrintCommand("Pinching gripper")));
+                // new JoystickButton(pxnController, pxnButtons.R1)
+                // .onTrue(new InstantCommand(
+                // () -> elevatorSubsystem.setGripperSpeed(ElevatorConstants.gripperSpeed))
+                // .until(() -> elevatorSubsystem
+                // .getGripperPos() == ElevatorConstants.gripperMax)
+                // .alongWith(new PrintCommand("Releasing gripper")));
                 new JoystickButton(pxnController, pxnButtons.Y)
-                                .onTrue(new InstantCommand(
-                                                () -> elevatorSubsystem.setGripperSpeed(ElevatorConstants.gripperSpeed))
-                                                .until(() -> elevatorSubsystem
-                                                                .getGripperPos() == ElevatorConstants.gripperMin)
-                                                .alongWith(new PrintCommand("Pinching gripper")));
+                                .onTrue(new InstantCommand(elevatorSubsystem::pinchGripper)
+                                                .alongWith(new PrintCommand("Pinching gripper")))
+                                .onFalse(new InstantCommand(elevatorSubsystem::stopGripper));
                 new JoystickButton(pxnController, pxnButtons.R1)
-                                .onTrue(new InstantCommand(
-                                                () -> elevatorSubsystem.setGripperSpeed(ElevatorConstants.gripperSpeed))
+                                .onTrue(new InstantCommand(elevatorSubsystem::releaseGripper)
                                                 .until(() -> elevatorSubsystem
                                                                 .getGripperPos() == ElevatorConstants.gripperMax)
                                                 .alongWith(new PrintCommand("Releasing gripper")));
