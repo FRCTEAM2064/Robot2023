@@ -151,7 +151,7 @@ public final class Constants implements Loggable {
         public static final int rotationPort = 10;
         public static final int tiltPort = 19;
         public static final double rotationSpeed = 0.1;
-        public static final double tiltSpeed = 0.4;
+        public static final double tiltSpeed = 0.2;
 
         public static final float maxTiltValue = 2; // TODO: add value
         public static final float minTiltValue = -2; // TODO: add value
@@ -161,7 +161,7 @@ public final class Constants implements Loggable {
         public static final int winchPort = 12;
         public static final double winchSpeed = 0.8;
         public static final int gripperPort = 1000;
-        public static final double gripperSpeed = 0.1; //TODO: Add value
+        public static final double gripperSpeed = 0.1; // TODO: Add value
 
         public static final float winchMax = 30;
         public static final float gripperMax = 1000;
