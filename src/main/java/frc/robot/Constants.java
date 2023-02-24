@@ -163,9 +163,10 @@ public final class Constants implements Loggable {
         public static final int gripperPort = 37;
         public static final double gripperSpeed = 0.1;
 
-        public static final float winchMax = 30;
-        public static final float gripperMax = -210;
-        public static final float gripperMin = -90;
+        public static final float winchMax = -210;
+        public static final float winchMin = -90;
+        public static final double gripperMax = -0.36;
+        public static final double gripperMin = 0.52;
 
         @Log
         public static double winchP = 0.1;
