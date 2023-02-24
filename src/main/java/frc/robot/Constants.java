@@ -159,13 +159,13 @@ public final class Constants implements Loggable {
 
     public static final class ElevatorConstants implements Loggable {
         public static final int winchPort = 12;
-        public static final double winchSpeed = 0.8;
+        public static final double winchSpeed = 0.4;
         public static final int gripperPort = 37;
-        public static final double gripperSpeed = 0.1; // TODO: Add value
+        public static final double gripperSpeed = 0.1;
 
         public static final float winchMax = 30;
-        public static final float gripperMax = 1000;
-        public static final float gripperMin = 1000;
+        public static final float gripperMax = -210;
+        public static final float gripperMin = -90;
 
         @Log
         public static double winchP = 0.1;
