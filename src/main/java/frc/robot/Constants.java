@@ -129,9 +129,9 @@ public final class Constants implements Loggable {
             // public static final int L2 = 7; don't use this
             public static final int R1 = 6;
             // public static final int R2 = 8; don't use this
-            public static final int A = 1;
-            public static final int B = 2;
-            public static final int X = 3;
+            public static final int A = 2;
+            public static final int B = 3;
+            public static final int X = 1;
             public static final int Y = 4;
             public static final int Share = 7;
             public static final int Options = 8;
@@ -160,12 +160,12 @@ public final class Constants implements Loggable {
     public static final class ElevatorConstants implements Loggable {
         public static final int winchPort = 12;
         public static final double winchSpeed = 0.8;
-        public static final int gripperPort = 37;
-        public static final double gripperSpeed = 0.1; //TODO: Add value
+        public static final int gripperPort = 13;
+        public static final double gripperSpeed = 0.1; // TODO: Add value
 
         public static final float winchMax = 30;
         public static final float gripperMax = 1000;
-        public static final float gripperMin = 1000; 
+        public static final float gripperMin = 1000;
 
         @Log
         public static double winchP = 0.1;
@@ -192,12 +192,11 @@ public final class Constants implements Loggable {
             ElevatorConstants.winchD = d;
         }
     }
+
     public static final class IntakeConstants {
-        public static final int leftMotorPort = 99;
-        public static final int rightMotorPort = 99;
+        public static final int leftMotorPort = 33;
+        public static final int rightMotorPort = 23;
 
-        public static final double rightMotorSpeed = 1.5;
-        public static final double leftMotorSpeed = 1.5;
-
+        public static final double motorSpeed = 1.5;
     }
 }

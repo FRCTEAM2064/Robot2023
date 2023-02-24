@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Elevator extends SubsystemBase implements Loggable {
   private CANSparkMax winchMotor;
   private RelativeEncoder winchEncoder;
-  private double starting;
 
   private CANSparkMax gripperMotor;
   private RelativeEncoder gripperEncoder;
@@ -33,7 +32,6 @@ public class Elevator extends SubsystemBase implements Loggable {
         ElevatorConstants.winchMax);
     winchMotor.setSoftLimit(SoftLimitDirection.kReverse,
         (float) winchEncoder.getPosition());
-    this.starting = winchEncoder.getPosition();
 
     gripperMotor = new CANSparkMax(ElevatorConstants.gripperPort,
         MotorType.kBrushless);
