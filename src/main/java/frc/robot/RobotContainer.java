@@ -61,13 +61,23 @@ public class RobotContainer implements Loggable {
                                 .onTrue(new InstantCommand(() -> intakeSubsystem.toggle()));
                 new JoystickButton(pxnController, pxnButtons.Y).onTrue(new TurnToBestTag(swerveSubsystem, limeLight));
 
+                // new JoystickButton(pxnController, pxnButtons.A)
+                // .onTrue(new RaiseElevator(elevatorSubsystem)
+                // .alongWith(new PrintCommand("going up")));
+                // new JoystickButton(pxnController, pxnButtons.B)
+                // .onTrue(new LowerElevator(elevatorSubsystem)
+                // .alongWith(new PrintCommand("going down")))
+                // .onFalse(new InstantCommand(elevatorSubsystem::stopWinch));
+
                 new JoystickButton(pxnController, pxnButtons.A)
-                                .onTrue(new RaiseElevator(elevatorSubsystem)
-                                                .alongWith(new PrintCommand("going up")));
+                                .onTrue(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0.5))
+                                                .alongWith(new PrintCommand("going up")))
+                                .onFalse(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0)));
                 new JoystickButton(pxnController, pxnButtons.B)
-                                .onTrue(new LowerElevator(elevatorSubsystem)
+                                .onTrue(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(-0.5))
                                                 .alongWith(new PrintCommand("going down")))
-                                .onFalse(new InstantCommand(elevatorSubsystem::stopWinch));
+                                .onFalse(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0)));
+
                 // Control for Gripper
                 // new JoystickButton(pxnController, pxnButtons.Y)
                 // .onTrue(new InstantCommand(

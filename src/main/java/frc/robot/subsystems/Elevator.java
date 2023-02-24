@@ -26,12 +26,12 @@ public class Elevator extends SubsystemBase implements Loggable {
     winchMotor = new CANSparkMax(ElevatorConstants.winchPort, MotorType.kBrushless);
     winchEncoder = winchMotor.getEncoder();
 
-    winchMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
-    winchMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
-    winchMotor.setSoftLimit(SoftLimitDirection.kForward,
-        ElevatorConstants.winchMax);
-    winchMotor.setSoftLimit(SoftLimitDirection.kReverse,
-        (float) winchEncoder.getPosition());
+    winchMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
+    winchMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
+    // winchMotor.setSoftLimit(SoftLimitDirection.kForward,
+    // ElevatorConstants.winchMax);
+    // winchMotor.setSoftLimit(SoftLimitDirection.kReverse,
+    // (float) winchEncoder.getPosition());
 
     gripperMotor = new CANSparkMax(ElevatorConstants.gripperPort,
         MotorType.kBrushless);

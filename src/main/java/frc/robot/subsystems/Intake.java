@@ -60,8 +60,8 @@ public class Intake extends SubsystemBase implements Loggable {
   }
 
   public void intakeMotors() {
-    leftMotor.set(IntakeConstants.motorSpeed);
-    rightMotor.set(-IntakeConstants.motorSpeed);
+    leftMotor.set(-IntakeConstants.motorSpeed);
+    rightMotor.set(IntakeConstants.motorSpeed);
   }
 
   public void stopMotors() {
