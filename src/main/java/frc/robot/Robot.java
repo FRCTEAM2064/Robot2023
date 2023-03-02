@@ -8,6 +8,7 @@ import java.io.File;
 import java.nio.file.FileSystem;
 import java.util.HashMap;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -64,6 +65,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("Autonomous Selection", m_chooser);
 
         Logger.configureLoggingAndConfig(this, false);
+
+        CameraServer.startAutomaticCapture();
     }
 
     /**

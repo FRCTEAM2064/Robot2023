@@ -74,10 +74,10 @@ public final class Constants implements Loggable {
         public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
-        public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;
+        public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 2;
         public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond
                 / 4;
-        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
+        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 4;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
 
         public static double balanceRollP = 0;
@@ -133,10 +133,10 @@ public final class Constants implements Loggable {
             public static final int B = 3;
             public static final int X = 1;
             public static final int Y = 4;
-            public static final int Share = 7;
-            public static final int Options = 8;
-            public static final int L3 = 9;
-            public static final int R3 = 10;
+            public static final int Share = 9;
+            public static final int Options = 10;
+            public static final int L3 = 11;
+            public static final int R3 = 12;
         }
 
         public static final int kDriverYAxis = 1;
@@ -159,18 +159,18 @@ public final class Constants implements Loggable {
 
     public static final class ElevatorConstants implements Loggable {
         public static final int winchPort = 12;
-        public static final double winchSpeed = 0.4;
+        public static final double winchSpeed = 0.1;
         public static final int gripperPort = 37;
-        public static final double gripperSpeed = 0.1;
+        public static final double gripperSpeed = 0.2;
 
-        public static final float winchMax = -210;
-        public static final float winchMin = -90;
-        public static final double gripperMax = -0.36;
-        public static final double gripperMin = 0.52;
+        public static final float winchMax = 130;
+        public static final float winchMin = 0;
+        public static final double gripperMax = 0;
+        public static final double gripperMin = 0.85;
 
         @Log
-        public static double winchP = 0.1;
-        public static double gripperP = 0.1;
+        public static double winchP = 0.4;
+        public static double gripperP = 1;
         @Log
         public static double winchI = 0;
         public static double gripperI = 0;
@@ -179,18 +179,10 @@ public final class Constants implements Loggable {
         public static double gripperD = 0;
 
         @Config
-        public void setWinchP(double p) {
-            ElevatorConstants.winchP = p;
-        }
-
-        @Config
-        public void setWinchI(double i) {
-            ElevatorConstants.winchI = i;
-        }
-
-        @Config
-        public void setWinchD(double d) {
-            ElevatorConstants.winchD = d;
+        public void setGripperPID(double p, double i, double d) {
+            gripperP = p;
+            gripperI = i;
+            gripperD = d;
         }
     }
 
@@ -198,6 +190,6 @@ public final class Constants implements Loggable {
         public static final int leftMotorPort = 33;
         public static final int rightMotorPort = 23;
 
-        public static final double motorSpeed = 0.3;
+        public static final double motorSpeed = 0.29;
     }
 }

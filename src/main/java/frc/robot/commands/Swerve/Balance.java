@@ -56,8 +56,8 @@ public class Balance extends CommandBase implements Loggable {
     double pitch = swerveSubsystem.getPitch();
     double roll = swerveSubsystem.getRoll();
 
-    double pitchDiff = (-0.2 - pitch);
-    double rollDiff = -(-0.7 - roll);
+    double pitchDiff = (-0.56 - pitch);
+    double rollDiff = -(-0.78 - roll);
 
     double xSpeed = Math.pow(10, -3 / pitchDiff);
     double ySpeed = Math.pow(10, -3 / rollDiff);

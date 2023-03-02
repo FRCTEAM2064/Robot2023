@@ -12,28 +12,28 @@ import frc.robot.subsystems.Elevator;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class RaiseElevator extends PIDCommand {
+public class PinchGripper extends PIDCommand {
   private final Elevator elevatorSubsystem;
 
-  /** Creates a new RaiseElevator. */
-  public RaiseElevator(Elevator elevatorSubsystem) {
+  /** Creates a new PinchGripper. */
+  public PinchGripper(Elevator elevatorSubsystem) {
     super(
         // The controller that the command will use
-        new PIDController(ElevatorConstants.winchP, ElevatorConstants.winchI, ElevatorConstants.winchD),
+        new PIDController(ElevatorConstants.gripperP, ElevatorConstants.gripperI, ElevatorConstants.gripperD),
         // This should return the measurement
-        () -> elevatorSubsystem.getWinchPos(),
+        () -> elevatorSubsystem.getGripperPos(),
         // This should return the setpoint (can also be a constant)
-        ElevatorConstants.winchMax,
+        ElevatorConstants.gripperMin,
         // This uses the output
         output -> {
-          System.out.println("raising: " + output);
-          elevatorSubsystem.setWinchSpeed(output);
+          System.out.println("pinching: " + output);
+          elevatorSubsystem.setGripperSpeed(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(elevatorSubsystem);
     // Configure additional PID options by calling `getController` here.
     this.elevatorSubsystem = elevatorSubsystem;
-    getController().setTolerance(1);
+    getController().setTolerance(0.05);
   }
 
   // Returns true when the command should end.
@@ -44,6 +44,6 @@ public class RaiseElevator extends PIDCommand {
 
   @Override
   public void end(boolean interrupted) {
-    this.elevatorSubsystem.stopWinch();
+    this.elevatorSubsystem.stopGripper();
   }
 }

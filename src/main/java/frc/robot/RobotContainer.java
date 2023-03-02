@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.Constants.*;
 import frc.robot.Constants.OIConstants.pxnButtons;
-import frc.robot.commands.Elevator.LowerElevator;
-import frc.robot.commands.Elevator.RaiseElevator;
 import frc.robot.commands.Elevator.*;
 import frc.robot.commands.Pancake.*;
 import frc.robot.commands.Swerve.*;
@@ -62,43 +60,26 @@ public class RobotContainer implements Loggable {
                 new JoystickButton(pxnController, pxnButtons.Y).onTrue(new TurnToBestTag(swerveSubsystem, limeLight));
 
                 // new JoystickButton(pxnController, pxnButtons.A)
-                // .onTrue(new RaiseElevator(elevatorSubsystem)
-                // .alongWith(new PrintCommand("going up")));
-                // new JoystickButton(pxnController, pxnButtons.B)
-                // .onTrue(new LowerElevator(elevatorSubsystem)
+                // .onTrue(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0.5))
+                // .alongWith(new PrintCommand("going up")))
+                // .onFalse(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0)));
+                // new JoystickButton(pxnController, pxnButtons.Options)
+                // .onTrue(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(-0.5))
                 // .alongWith(new PrintCommand("going down")))
-                // .onFalse(new InstantCommand(elevatorSubsystem::stopWinch));
+                // .onFalse(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0)));
 
                 new JoystickButton(pxnController, pxnButtons.A)
-                                .onTrue(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0.5))
-                                                .alongWith(new PrintCommand("going up")))
-                                .onFalse(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0)));
+                                .onTrue(new RaiseElevator(elevatorSubsystem)
+                                                .alongWith(new PrintCommand("going up")));
                 new JoystickButton(pxnController, pxnButtons.B)
-                                .onTrue(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(-0.5))
-                                                .alongWith(new PrintCommand("going down")))
-                                .onFalse(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0)));
+                                .onTrue(new LowerElevator(elevatorSubsystem)
+                                                .alongWith(new PrintCommand("going down")));
 
                 // Control for Gripper
-                // new JoystickButton(pxnController, pxnButtons.Y)
-                // .onTrue(new InstantCommand(
-                // () -> elevatorSubsystem.setGripperSpeed(ElevatorConstants.gripperSpeed))
-                // .until(() -> elevatorSubsystem
-                // .getGripperPos() == ElevatorConstants.gripperMin)
-                // .alongWith(new PrintCommand("Pinching gripper")));
-                // new JoystickButton(pxnController, pxnButtons.R1)
-                // .onTrue(new InstantCommand(
-                // () -> elevatorSubsystem.setGripperSpeed(ElevatorConstants.gripperSpeed))
-                // .until(() -> elevatorSubsystem
-                // .getGripperPos() == ElevatorConstants.gripperMax)
-                // .alongWith(new PrintCommand("Releasing gripper")));
                 new JoystickButton(pxnController, pxnButtons.L1)
-                                .onTrue(new InstantCommand(elevatorSubsystem::pinchGripper)
-                                                .alongWith(new PrintCommand("Pinching gripper")))
-                                .onFalse(new InstantCommand(elevatorSubsystem::stopGripper));
+                                .onTrue(new PinchGripper(elevatorSubsystem));
                 new JoystickButton(pxnController, pxnButtons.R1)
-                                .onTrue(new InstantCommand(elevatorSubsystem::releaseGripper)
-                                                .alongWith(new PrintCommand("Releasing gripper")))
-                                .onFalse(new InstantCommand(elevatorSubsystem::stopGripper));
+                                .onTrue(new ReleaseGripper(elevatorSubsystem));
 
                 new JoystickButton(driverJoystick, 1)
                                 .onTrue(new InstantCommand(intakeSubsystem::intakeMotors)

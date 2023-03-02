@@ -23,8 +23,7 @@ public class Intake extends SubsystemBase implements Loggable {
   Compressor intakeCompressor;
   DoubleSolenoid intakeSolenoid;
 
-  private CANSparkMax leftMotor;
-  private CANSparkMax rightMotor;
+  private CANSparkMax motor;
 
   /** Creates a new Intake. */
   public Intake() {
@@ -34,8 +33,7 @@ public class Intake extends SubsystemBase implements Loggable {
     intakeSolenoid = new DoubleSolenoid(20, PneumaticsModuleType.REVPH, 0, 1);
     intakeSolenoid.set(kOff);
 
-    leftMotor = new CANSparkMax(IntakeConstants.leftMotorPort, MotorType.kBrushless);
-    rightMotor = new CANSparkMax(IntakeConstants.rightMotorPort, MotorType.kBrushless);
+    motor = new CANSparkMax(IntakeConstants.rightMotorPort, MotorType.kBrushed);
   }
 
   @Override
@@ -60,12 +58,10 @@ public class Intake extends SubsystemBase implements Loggable {
   }
 
   public void intakeMotors() {
-    leftMotor.set(-IntakeConstants.motorSpeed);
-    rightMotor.set(IntakeConstants.motorSpeed);
+    motor.set(IntakeConstants.motorSpeed);
   }
 
   public void stopMotors() {
-    leftMotor.set(0);
-    rightMotor.set(0);
+    motor.set(0);
   }
 }
