@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
@@ -19,11 +21,14 @@ import io.github.oblarg.oblog.annotations.Log;
 
 import frc.robot.Constants.IntakeConstants;
 
+
+
 public class Intake extends SubsystemBase implements Loggable {
   Compressor intakeCompressor;
   DoubleSolenoid intakeSolenoid;
 
-  private CANSparkMax motor;
+  private CANSparkMax motor, tiltMotor;
+  private RelativeEncoder tiltEncoder;
 
   /** Creates a new Intake. */
   public Intake() {
@@ -34,6 +39,17 @@ public class Intake extends SubsystemBase implements Loggable {
     intakeSolenoid.set(kOff);
 
     motor = new CANSparkMax(IntakeConstants.rightMotorPort, MotorType.kBrushed);
+    tiltMotor = new CANSparkMax(IntakeConstants.tiltPort, MotorType.kBrushless);
+
+    tiltEncoder = tiltMotor.getEncoder();
+
+    tiltMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    tiltMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    tiltMotor.setSoftLimit(SoftLimitDirection.kForward,
+        IntakeConstants.maxTiltValue);
+    tiltMotor.setSoftLimit(SoftLimitDirection.kReverse,
+        IntakeConstants.minTiltValue);
+
   }
 
   @Override
@@ -63,5 +79,21 @@ public class Intake extends SubsystemBase implements Loggable {
 
   public void stopMotors() {
     motor.set(0);
+  }
+  public void setTiltSpeed(double speed) {
+    tiltMotor.set(speed);
+  }
+
+  public void stopTilt() {
+    tiltMotor.set(0);
+  }
+
+  @Log
+  public double getTilt() {
+    return tiltEncoder.getPosition();
+  }
+
+  public void resetTiltHeading() {
+    tiltEncoder.setPosition(0);
   }
 }
