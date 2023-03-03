@@ -33,7 +33,7 @@ public class PinchGripper extends PIDCommand {
     addRequirements(elevatorSubsystem);
     // Configure additional PID options by calling `getController` here.
     this.elevatorSubsystem = elevatorSubsystem;
-    getController().setTolerance(0.05);
+    getController().setTolerance(0.1);
   }
 
   // Returns true when the command should end.

@@ -170,10 +170,10 @@ public final class Constants implements Loggable {
 
         @Log
         public static double winchP = 0.4;
-        public static double gripperP = 1;
+        public static double gripperP = 1.1;
         @Log
         public static double winchI = 0;
-        public static double gripperI = 0;
+        public static double gripperI = 0.1;
         @Log
         public static double winchD = 0;
         public static double gripperD = 0;

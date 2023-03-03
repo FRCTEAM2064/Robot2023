@@ -109,13 +109,10 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        HashMap<String, Command> eventMap = new HashMap<String, Command>();
-        // eventMap.put("intake", new IntakeCommand())
-
         m_autoSelected = m_chooser.getSelected();
 
         try {
-            m_autonomousCommand = m_robotContainer.getAutonomousCommand(m_autoSelected, eventMap);
+            m_autonomousCommand = m_robotContainer.getAutonomousCommand(m_autoSelected);
         } catch (Exception e) {
             Log.error("Error loading autonomous command: " + e.getMessage());
             e.printStackTrace();

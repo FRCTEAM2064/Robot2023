@@ -42,11 +42,11 @@
       "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "intake"
+          "start_intake"
         ],
         "executionBehavior": "sequential",
-        "waitBehavior": "none",
-        "waitTime": 0
+        "waitBehavior": "after",
+        "waitTime": 1.0
       }
     },
     {
@@ -72,5 +72,21 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 1.3361505681818178,
+      "names": [
+        "event",
+        "drop_intake"
+      ]
+    },
+    {
+      "position": 0.6874289772727272,
+      "names": [
+        "event",
+        "stop_intake",
+        "raise_intake"
+      ]
+    }
+  ]
 }

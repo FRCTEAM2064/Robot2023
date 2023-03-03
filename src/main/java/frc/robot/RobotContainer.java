@@ -88,7 +88,13 @@ public class RobotContainer implements Loggable {
                                                 .alongWith(new PrintCommand("stopping intake")));
         }
 
-        public Command getAutonomousCommand(String pathName, HashMap<String, Command> eventMap) {
+        public Command getAutonomousCommand(String pathName) {
+                HashMap<String, Command> eventMap = new HashMap<String, Command>();
+                eventMap.put("drop_intake", new InstantCommand(() -> intakeSubsystem.extend()));
+                eventMap.put("raise_intake", new InstantCommand(() -> intakeSubsystem.retract()));
+                eventMap.put("start_intake", new InstantCommand(() -> intakeSubsystem.intakeMotors()));
+                eventMap.put("stop_intake", new InstantCommand(() -> intakeSubsystem.stopMotors()));
+
                 PathPlannerTrajectory path = PathPlanner.loadPath(pathName, AutoConstants.kMaxSpeedMetersPerSecond,
                                 AutoConstants.kMaxAccelerationMetersPerSecondSquared);
                 SwerveAutoBuilder builder = new SwerveAutoBuilder(
