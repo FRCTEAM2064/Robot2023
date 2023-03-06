@@ -47,7 +47,7 @@ public class RobotContainer implements Loggable {
                                 () -> !driverJoystick.getRawButton(1), // field oriented button
                                 () -> driverJoystick.getRawButton(1)));
                 pancakeSubsystem.setDefaultCommand(
-                                new RotationJoystickCmd(pancakeSubsystem, () -> pxnController.getPOV()));
+                                new RotationJoystickCmd(pancakeSubsystem,  () -> pxnController.getPOV()));
                 configureButtonBindings();
         }
 

@@ -8,8 +8,10 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.PancakeConstants;
 import frc.robot.subsystems.Pancake;
+import frc.robot.subsystems.Intake;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
@@ -23,6 +25,7 @@ public class RotationJoystickCmd extends CommandBase implements Loggable {
     this.pancakeSubsystem = pancakeSubsystem;
     this.pxnPOVfunction = pxnPOVFunction;
     addRequirements(pancakeSubsystem);
+
   }
 
   // Called when the command is initially scheduled.
@@ -36,14 +39,15 @@ public class RotationJoystickCmd extends CommandBase implements Loggable {
     SmartDashboard.putNumber("POV", pxnPOVfunction.get());
     if (pxnPOVfunction.get() == -1) {
       pancakeSubsystem.stopRotation();
-      pancakeSubsystem.stopTilt();
+      // pancakeSubsystem.stopTilt();
     }
     Integer val = pxnPOVfunction.get();
     boolean neg = val >= 180;
     if (val == 90 || val == 270) {
       pancakeSubsystem.setRotationSpeed((neg ? 1 : -1) * PancakeConstants.rotationSpeed);
     } else if (val == 0 || val == 180) {
-      pancakeSubsystem.setTiltSpeed((neg ? 1 : -1) * PancakeConstants.tiltSpeed);
+      // pancakeSubsystem.setTiltSpeed((neg ? 1 : -1) * PancakeConstants.tiltSpeed);
+
     }
   }
 
@@ -51,7 +55,7 @@ public class RotationJoystickCmd extends CommandBase implements Loggable {
   @Override
   public void end(boolean interrupted) {
     pancakeSubsystem.stopRotation();
-    pancakeSubsystem.stopTilt();
+    // pancakeSubsystem.stopTilt();
   }
 
   // Returns true when the command should end.

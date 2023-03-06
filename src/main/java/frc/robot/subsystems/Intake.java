@@ -27,7 +27,7 @@ public class Intake extends SubsystemBase implements Loggable {
   Compressor intakeCompressor;
   DoubleSolenoid intakeSolenoid;
 
-  private CANSparkMax motor, tiltMotor;
+  private CANSparkMax motor, rollerMotor;
   private RelativeEncoder tiltEncoder;
 
   /** Creates a new Intake. */
@@ -38,16 +38,16 @@ public class Intake extends SubsystemBase implements Loggable {
     intakeSolenoid = new DoubleSolenoid(20, PneumaticsModuleType.REVPH, 0, 1);
     intakeSolenoid.set(kOff);
 
-    motor = new CANSparkMax(IntakeConstants.rightMotorPort, MotorType.kBrushed);
-    tiltMotor = new CANSparkMax(IntakeConstants.tiltPort, MotorType.kBrushless);
+    motor = new CANSparkMax(IntakeConstants.rightMotorPort, MotorType.kBrushless);
+    rollerMotor = new CANSparkMax(IntakeConstants.tiltPort, MotorType.kBrushless);
 
-    tiltEncoder = tiltMotor.getEncoder();
+    tiltEncoder = rollerMotor.getEncoder();
 
-    tiltMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
-    tiltMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
-    tiltMotor.setSoftLimit(SoftLimitDirection.kForward,
+    rollerMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    rollerMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    rollerMotor.setSoftLimit(SoftLimitDirection.kForward,
         IntakeConstants.maxTiltValue);
-    tiltMotor.setSoftLimit(SoftLimitDirection.kReverse,
+    rollerMotor.setSoftLimit(SoftLimitDirection.kReverse,
         IntakeConstants.minTiltValue);
 
   }
@@ -81,11 +81,11 @@ public class Intake extends SubsystemBase implements Loggable {
     motor.set(0);
   }
   public void setTiltSpeed(double speed) {
-    tiltMotor.set(speed);
+    rollerMotor.set(speed);
   }
 
   public void stopTilt() {
-    tiltMotor.set(0);
+    rollerMotor.set(0);
   }
 
   @Log
