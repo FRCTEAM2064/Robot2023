@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.*;
 import frc.robot.Constants.OIConstants.pxnButtons;
 import frc.robot.commands.Elevator.*;
+import frc.robot.commands.Intake.StartIntake;
+import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Pancake.*;
 import frc.robot.commands.Swerve.*;
 import frc.robot.commands.Vision.*;
@@ -56,7 +58,8 @@ public class RobotContainer implements Loggable {
                                 .onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading()));
                 new JoystickButton(driverJoystick, 8).whileTrue(new Balance(swerveSubsystem));
                 new JoystickButton(pxnController, pxnButtons.X)
-                                .onTrue(new InstantCommand(() -> intakeSubsystem.toggle()));
+                                .onTrue(new StartIntake(intakeSubsystem))
+                                .onFalse(new StopIntake(intakeSubsystem));
                 new JoystickButton(pxnController, pxnButtons.Y).onTrue(new TurnToBestTag(swerveSubsystem, limeLight));
 
                 // new JoystickButton(pxnController, pxnButtons.A)
