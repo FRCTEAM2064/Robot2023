@@ -47,7 +47,7 @@ public class RobotContainer implements Loggable {
                                 () -> !driverJoystick.getRawButton(1), // field oriented button
                                 () -> driverJoystick.getRawButton(1)));
                 pancakeSubsystem.setDefaultCommand(
-                                new RotationJoystickCmd(pancakeSubsystem,  () -> pxnController.getPOV()));
+                                new RotationJoystickCmd(pancakeSubsystem, () -> pxnController.getPOV()));
                 configureButtonBindings();
         }
 
@@ -77,9 +77,16 @@ public class RobotContainer implements Loggable {
 
                 // Control for Gripper
                 new JoystickButton(pxnController, pxnButtons.L1)
-                                .onTrue(new PinchGripper(elevatorSubsystem));
+                                .onTrue(new InstantCommand(() -> elevatorSubsystem.pinchGripper()))
+                                .onFalse(new InstantCommand(() -> elevatorSubsystem.stopGripper()));
                 new JoystickButton(pxnController, pxnButtons.R1)
-                                .onTrue(new ReleaseGripper(elevatorSubsystem));
+                                .onTrue(new InstantCommand(() -> elevatorSubsystem.releaseGripper()))
+                                .onFalse(new InstantCommand(() -> elevatorSubsystem.stopGripper()));
+
+                // new JoystickButton(pxnController, pxnButtons.L1)
+                // .onTrue(new PinchGripper(elevatorSubsystem));
+                // new JoystickButton(pxnController, pxnButtons.R1)
+                // .onTrue(new ReleaseGripper(elevatorSubsystem));
 
                 new JoystickButton(driverJoystick, 1)
                                 .onTrue(new InstantCommand(intakeSubsystem::intakeMotors)

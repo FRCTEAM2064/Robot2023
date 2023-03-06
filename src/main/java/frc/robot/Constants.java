@@ -149,8 +149,7 @@ public final class Constants implements Loggable {
 
     public static final class PancakeConstants {
         public static final int rotationPort = 10;
-        public static final double rotationSpeed = 0.1;
-        
+        public static final double rotationSpeed = 0.3;
     }
 
     public static final class ElevatorConstants implements Loggable {
@@ -193,4 +192,4 @@ public final class Constants implements Loggable {
         public static final float maxTiltValue = 2; // TODO: add value
         public static final float minTiltValue = -2; // TODO: add value
     }
-} 
+}
