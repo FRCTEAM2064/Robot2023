@@ -80,16 +80,9 @@ public class RobotContainer implements Loggable {
 
                 // Control for Gripper
                 new JoystickButton(pxnController, pxnButtons.L1)
-                                .onTrue(new InstantCommand(() -> elevatorSubsystem.pinchGripper()))
-                                .onFalse(new InstantCommand(() -> elevatorSubsystem.stopGripper()));
+                                .onTrue(new PinchGripper(elevatorSubsystem));
                 new JoystickButton(pxnController, pxnButtons.R1)
-                                .onTrue(new InstantCommand(() -> elevatorSubsystem.releaseGripper()))
-                                .onFalse(new InstantCommand(() -> elevatorSubsystem.stopGripper()));
-
-                // new JoystickButton(pxnController, pxnButtons.L1)
-                // .onTrue(new PinchGripper(elevatorSubsystem));
-                // new JoystickButton(pxnController, pxnButtons.R1)
-                // .onTrue(new ReleaseGripper(elevatorSubsystem));
+                                .onTrue(new ReleaseGripper(elevatorSubsystem));
 
                 new JoystickButton(driverJoystick, 1)
                                 .onTrue(new InstantCommand(intakeSubsystem::intakeMotors)

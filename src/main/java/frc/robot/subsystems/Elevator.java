@@ -40,9 +40,9 @@ public class Elevator extends SubsystemBase implements Loggable {
     gripperMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
     gripperMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
 
-    gripperMotor.setSoftLimit(SoftLimitDirection.kReverse,
-        (float) ElevatorConstants.gripperMax);
     gripperMotor.setSoftLimit(SoftLimitDirection.kForward,
+        (float) ElevatorConstants.gripperMax);
+    gripperMotor.setSoftLimit(SoftLimitDirection.kReverse,
         (float) ElevatorConstants.gripperMin);
   }
 
@@ -90,11 +90,11 @@ public class Elevator extends SubsystemBase implements Loggable {
   }
 
   public void pinchGripper() {
-    setGripperSpeed(ElevatorConstants.gripperSpeed);
+    setGripperSpeed(-ElevatorConstants.gripperSpeed);
   }
 
   public void releaseGripper() {
-    setGripperSpeed(-ElevatorConstants.gripperSpeed);
+    setGripperSpeed(ElevatorConstants.gripperSpeed);
   }
 
 }
