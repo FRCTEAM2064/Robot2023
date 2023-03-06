@@ -11,13 +11,11 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Log;
 
 import frc.robot.Constants.IntakeConstants;
 
@@ -28,7 +26,6 @@ public class Intake extends SubsystemBase implements Loggable {
   DoubleSolenoid intakeSolenoid;
 
   private CANSparkMax motor, rollerMotor;
-  private RelativeEncoder tiltEncoder;
 
   /** Creates a new Intake. */
   public Intake() {
@@ -39,16 +36,15 @@ public class Intake extends SubsystemBase implements Loggable {
     intakeSolenoid.set(kOff);
 
     motor = new CANSparkMax(IntakeConstants.rightMotorPort, MotorType.kBrushless);
-    rollerMotor = new CANSparkMax(IntakeConstants.tiltPort, MotorType.kBrushless);
+    rollerMotor = new CANSparkMax(IntakeConstants.rollerPort, MotorType.kBrushless);
 
-    tiltEncoder = rollerMotor.getEncoder();
 
     rollerMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
     rollerMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
     rollerMotor.setSoftLimit(SoftLimitDirection.kForward,
-        IntakeConstants.maxTiltValue);
+        IntakeConstants.maxRollerValue);
     rollerMotor.setSoftLimit(SoftLimitDirection.kReverse,
-        IntakeConstants.minTiltValue);
+        IntakeConstants.minRollerValue);
 
   }
 
@@ -75,25 +71,16 @@ public class Intake extends SubsystemBase implements Loggable {
 
   public void intakeMotors() {
     motor.set(IntakeConstants.motorSpeed);
+    rollerMotor.set(IntakeConstants.rollerSpeed);
+
   }
 
   public void stopMotors() {
     motor.set(0);
+    rollerMotor.set(0);
   }
-  public void setTiltSpeed(double speed) {
+  public void setRollerSpeed(double speed) {
     rollerMotor.set(speed);
   }
 
-  public void stopTilt() {
-    rollerMotor.set(0);
-  }
-
-  @Log
-  public double getTilt() {
-    return tiltEncoder.getPosition();
-  }
-
-  public void resetTiltHeading() {
-    tiltEncoder.setPosition(0);
-  }
 }
