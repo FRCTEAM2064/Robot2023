@@ -16,14 +16,14 @@ public class PinchGripper extends PIDCommand {
   private final Elevator elevatorSubsystem;
 
   /** Creates a new PinchGripper. */
-  public PinchGripper(Elevator elevatorSubsystem) {
+  public PinchGripper(Elevator elevatorSubsystem, boolean isCube) {
     super(
         // The controller that the command will use
         new PIDController(ElevatorConstants.gripperP, ElevatorConstants.gripperI, ElevatorConstants.gripperD),
         // This should return the measurement
         () -> elevatorSubsystem.getGripperPos(),
         // This should return the setpoint (can also be a constant)
-        ElevatorConstants.gripperMin,
+        isCube ? ElevatorConstants.gripperCube : ElevatorConstants.gripperMax,
         // This uses the output
         output -> {
           System.out.println("pinching: " + output);

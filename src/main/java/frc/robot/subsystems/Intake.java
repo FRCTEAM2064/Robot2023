@@ -19,8 +19,6 @@ import io.github.oblarg.oblog.Loggable;
 
 import frc.robot.Constants.IntakeConstants;
 
-
-
 public class Intake extends SubsystemBase implements Loggable {
   Compressor intakeCompressor;
   DoubleSolenoid intakeSolenoid;
@@ -37,7 +35,6 @@ public class Intake extends SubsystemBase implements Loggable {
 
     motor = new CANSparkMax(IntakeConstants.rightMotorPort, MotorType.kBrushless);
     rollerMotor = new CANSparkMax(IntakeConstants.rollerPort, MotorType.kBrushless);
-
 
     rollerMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
     rollerMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
@@ -72,13 +69,13 @@ public class Intake extends SubsystemBase implements Loggable {
   public void intakeMotors() {
     motor.set(IntakeConstants.motorSpeed);
     rollerMotor.set(IntakeConstants.rollerSpeed);
-
   }
 
   public void stopMotors() {
     motor.set(0);
     rollerMotor.set(0);
   }
+
   public void setRollerSpeed(double speed) {
     rollerMotor.set(speed);
   }

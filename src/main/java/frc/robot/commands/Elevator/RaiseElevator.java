@@ -16,14 +16,14 @@ public class RaiseElevator extends PIDCommand {
   private final Elevator elevatorSubsystem;
 
   /** Creates a new RaiseElevator. */
-  public RaiseElevator(Elevator elevatorSubsystem) {
+  public RaiseElevator(Elevator elevatorSubsystem, boolean isHigh) {
     super(
         // The controller that the command will use
         new PIDController(ElevatorConstants.winchP, ElevatorConstants.winchI, ElevatorConstants.winchD),
         // This should return the measurement
         () -> elevatorSubsystem.getWinchPos(),
         // This should return the setpoint (can also be a constant)
-        ElevatorConstants.winchMax,
+        isHigh ? ElevatorConstants.winchLevelOne : ElevatorConstants.winchLevelTwo,
         // This uses the output
         output -> {
           System.out.println("raising: " + output);

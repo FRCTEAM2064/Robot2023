@@ -21,7 +21,6 @@ import frc.robot.commands.Pancake.*;
 import frc.robot.commands.Swerve.*;
 import frc.robot.commands.Vision.*;
 import frc.robot.commands.Pancake.RotationJoystickCmd;
-import frc.robot.commands.Vision.TurnToBestTag;
 import frc.robot.subsystems.*;
 import io.github.oblarg.oblog.Loggable;
 
@@ -55,7 +54,7 @@ public class RobotContainer implements Loggable {
 
         private void configureButtonBindings() {
                 new JoystickButton(driverTurnJoystick, 1)
-                                .onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading()));
+                                .whileTrue((new MoveToBestTag(swerveSubsystem, limeLight)));
                 new JoystickButton(driverJoystick, 8).whileTrue(new Balance(swerveSubsystem));
                 new JoystickButton(pxnController, pxnButtons.X)
                                 .onTrue(new StartIntake(intakeSubsystem))
@@ -71,17 +70,12 @@ public class RobotContainer implements Loggable {
                 // .alongWith(new PrintCommand("going down")))
                 // .onFalse(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0)));
 
-                new JoystickButton(pxnController, pxnButtons.A)
-                                .onTrue(new RaiseElevator(elevatorSubsystem)
-                                                .alongWith(new PrintCommand("going up")));
-                new JoystickButton(pxnController, pxnButtons.B)
-                                .onTrue(new LowerElevator(elevatorSubsystem)
-                                                .alongWith(new PrintCommand("going down")));
-
                 // Control for Gripper
+                new JoystickButton(pxnController, pxnButtons.A)
+                                .onTrue(new PinchGripper(elevatorSubsystem, true));
+                new JoystickButton(pxnController, pxnButtons.B)
+                                .onTrue(new PinchGripper(elevatorSubsystem, false));
                 new JoystickButton(pxnController, pxnButtons.L1)
-                                .onTrue(new PinchGripper(elevatorSubsystem));
-                new JoystickButton(pxnController, pxnButtons.R1)
                                 .onTrue(new ReleaseGripper(elevatorSubsystem));
 
                 new JoystickButton(driverJoystick, 1)

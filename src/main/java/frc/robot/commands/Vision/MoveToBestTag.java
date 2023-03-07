@@ -29,6 +29,8 @@ public class MoveToBestTag extends CommandBase {
     yController.setSetpoint(0);
     rotationController.setSetpoint(0);
 
+    xController.setTolerance(0.05);
+
     addRequirements(swerveSubsystem);
     this.swerveSubsystem = swerveSubsystem;
     this.visionSubsystem = visionSubsystem;
@@ -37,43 +39,34 @@ public class MoveToBestTag extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // double xSpeed = xController.calculate();
-    // double ySpeed = yController.calculate();
-    // double rotationSpeed =
-    // rotationController.calculate(visionSubsystem.getdegRotationToTarget());
+    double xSpeed = xController.calculate(visionSubsystem.getdegRotationToTarget());
 
-    // double maxMovementSpeed = DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-    // double maxTurningSpeed =
-    // DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
-    // double actualXSpeed = Math.copySign(Math.min(Math.abs(xSpeed),
-    // maxMovementSpeed), xSpeed);
-    // double actualYSpeed = Math.copySign(Math.min(Math.abs(ySpeed),
-    // maxMovementSpeed), ySpeed);
-    // double actualRotationSpeed = Math.copySign(Math.min(Math.abs(rotationSpeed),
-    // maxTurningSpeed), rotationSpeed);
+    double maxMovementSpeed = DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+    double actualXSpeed = Math.copySign(Math.min(Math.abs(xSpeed),
+        maxMovementSpeed), xSpeed);
 
-    // // 4. Construct desired chassis speeds
-    // ChassisSpeeds chassisSpeeds;
-    // // Relative to robot
-    // chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(0, 0,
-    // actualRotationSpeed, swerveSubsystem.getRotation2d());
+    // 4. Construct desired chassis speeds
+    ChassisSpeeds chassisSpeeds;
+    // Relative to robot
+    chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(actualXSpeed, 0,
+        0, swerveSubsystem.getRotation2d());
 
-    // // 5. Convert chassis speeds to individual module states
-    // SwerveModuleState[] moduleStates =
-    // DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
+    // 5. Convert chassis speeds to individual module states
+    SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
-    // // 6. Output each module states to wheels
-    // swerveSubsystem.setModuleStates(moduleStates);
+    // 6. Output each module states to wheels
+    swerveSubsystem.setModuleStates(moduleStates);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    swerveSubsystem.stopModules();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return xController.atSetpoint();
   }
 }

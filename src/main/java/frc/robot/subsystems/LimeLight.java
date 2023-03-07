@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.Objects;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -13,13 +15,14 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.ControlMode.*;
-import frc.robot.utils.Log;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
 /**
  * Lime Light Class was started by Corey Applegate of Team 3244
  * Granite City Gearheads.
  */
-public class LimeLight extends SubsystemBase {
+public class LimeLight extends SubsystemBase implements Loggable {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -360,11 +363,8 @@ public class LimeLight extends SubsystemBase {
 
     public double[] getTargetPoseInRobotSpace() {
         NetworkTableEntry pose = m_table.getEntry("botpose");
-        double[] poseArray = pose.getDoubleArray(new double[6]);
+        double[] defaultArray = { 0, 0, 0, 0, 0, 0 };
+        double[] poseArray = pose.getDoubleArray(defaultArray);
         return poseArray;
-    }
-
-    public double getDistanceFromTag() {
-        return getTargetPoseInRobotSpace()[2];
     }
 }
