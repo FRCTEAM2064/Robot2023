@@ -79,28 +79,6 @@ public final class Constants implements Loggable {
                 / 4;
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 4;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
-
-        public static double balanceRollP = 0;
-        public static double balanceRollI = 0;
-        public static double balanceRollD = 0;
-        public static double balancePitchP = 0;
-        public static double balancePitchI = 0;
-        public static double balancePitchD = 0;
-
-        @Config
-        public void setRollPID(double p, double i, double d) {
-            balanceRollP = p;
-            balanceRollI = i;
-            balanceRollD = d;
-        }
-
-        @Config
-        public void setPitchPID(double p, double i, double d) {
-            balancePitchP = p;
-            balancePitchI = i;
-            balancePitchD = d;
-        }
-
     }
 
     public static final class AutoConstants {
@@ -159,7 +137,7 @@ public final class Constants implements Loggable {
         public static final double gripperSpeed = 0.2;
 
         public static final float winchLevelOne = 130;
-        public static final float winchLevelTwo = 160;
+        public static final float winchLevelTwo = 176;
         public static final float winchMin = 0;
         public static final double gripperMax = 0;
         public static final double gripperCone = -8.89;
@@ -190,8 +168,5 @@ public final class Constants implements Loggable {
 
         public static final double motorSpeed = 1.5;
         public static final double rollerSpeed = 0.6;
-
-        public static final float maxRollerValue = 2; // TODO: add value
-        public static final float minRollerValue = -2; // TODO: add value
     }
 }

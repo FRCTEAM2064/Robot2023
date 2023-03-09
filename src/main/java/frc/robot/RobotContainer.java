@@ -55,34 +55,30 @@ public class RobotContainer implements Loggable {
         private void configureButtonBindings() {
                 new JoystickButton(driverTurnJoystick, 1)
                                 .whileTrue((new MoveToBestTag(swerveSubsystem, limeLight)));
+
                 new JoystickButton(driverJoystick, 8).whileTrue(new Balance(swerveSubsystem));
-                new JoystickButton(pxnController, pxnButtons.X)
+                new JoystickButton(driverJoystick, 1)
                                 .onTrue(new StartIntake(intakeSubsystem))
                                 .onFalse(new StopIntake(intakeSubsystem));
-                new JoystickButton(pxnController, pxnButtons.Y).onTrue(new TurnToBestTag(swerveSubsystem, limeLight));
 
+                // new JoystickButton(pxnController, pxnButtons.Y).onTrue(new
+                // TurnToBestTag(swerveSubsystem, limeLight));
                 // new JoystickButton(pxnController, pxnButtons.A)
-                // .onTrue(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0.5))
-                // .alongWith(new PrintCommand("going up")))
-                // .onFalse(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0)));
-                // new JoystickButton(pxnController, pxnButtons.Options)
-                // .onTrue(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(-0.5))
-                // .alongWith(new PrintCommand("going down")))
-                // .onFalse(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0)));
-
-                // Control for Gripper
-                new JoystickButton(pxnController, pxnButtons.A)
-                                .onTrue(new PinchGripper(elevatorSubsystem, true));
-                new JoystickButton(pxnController, pxnButtons.B)
-                                .onTrue(new PinchGripper(elevatorSubsystem, false));
+                // .onTrue(new PinchGripper(elevatorSubsystem, true));
+                // new JoystickButton(pxnController, pxnButtons.B)
+                // .onTrue(new PinchGripper(elevatorSubsystem, false));
                 new JoystickButton(pxnController, pxnButtons.L1)
                                 .onTrue(new ReleaseGripper(elevatorSubsystem));
 
-                new JoystickButton(driverJoystick, 1)
-                                .onTrue(new InstantCommand(intakeSubsystem::intakeMotors)
-                                                .alongWith(new PrintCommand("Intaking")))
-                                .onFalse(new InstantCommand(intakeSubsystem::stopMotors)
-                                                .alongWith(new PrintCommand("stopping intake")));
+                new JoystickButton(pxnController, pxnButtons.A)
+                                .onTrue(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0.5))
+                                                .alongWith(new PrintCommand("going up")))
+                                .onFalse(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0)));
+                new JoystickButton(pxnController, pxnButtons.B)
+                                .onTrue(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(-0.5))
+                                                .alongWith(new PrintCommand("going down")))
+                                .onFalse(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0)));
+
         }
 
         public Command getAutonomousCommand(String pathName) {

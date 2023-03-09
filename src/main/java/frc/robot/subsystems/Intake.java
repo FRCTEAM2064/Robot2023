@@ -36,12 +36,8 @@ public class Intake extends SubsystemBase implements Loggable {
     motor = new CANSparkMax(IntakeConstants.rightMotorPort, MotorType.kBrushless);
     rollerMotor = new CANSparkMax(IntakeConstants.rollerPort, MotorType.kBrushless);
 
-    rollerMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
-    rollerMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
-    rollerMotor.setSoftLimit(SoftLimitDirection.kForward,
-        IntakeConstants.maxRollerValue);
-    rollerMotor.setSoftLimit(SoftLimitDirection.kReverse,
-        IntakeConstants.minRollerValue);
+    rollerMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
+    rollerMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
 
   }
 

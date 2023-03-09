@@ -59,8 +59,8 @@ public class Balance extends CommandBase implements Loggable {
     double pitchDiff = (-0.56 - pitch);
     double rollDiff = -(-0.78 - roll);
 
-    double xSpeed = Math.pow(10, -3 / pitchDiff);
-    double ySpeed = Math.pow(10, -3 / rollDiff);
+    double xSpeed = 3 * pitchDiff / 140;
+    double ySpeed = 3 * rollDiff / 140;
 
     // System.out.println(roll);
 
