@@ -166,7 +166,13 @@ public final class Constants implements Loggable {
         public static final int rightMotorPort = 23;
         public static final int rollerPort = 19;
 
-        public static final double motorSpeed = 1.5;
+        public static final double motorSpeed = 1;
         public static final double rollerSpeed = 0.6;
+    }
+
+    public static final class LimelightConstants {
+        public static final double limelightHeight = 13;
+        public static final double midPoleHeight = 25;
+        public static final double limelightAngle = 11;
     }
 }

@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -14,6 +15,9 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.LimelightHelpers;
+import frc.robot.Constants.LimelightConstants;
+import frc.robot.LimelightHelpers.LimelightResults;
 import frc.robot.subsystems.ControlMode.*;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
@@ -367,4 +371,53 @@ public class LimeLight extends SubsystemBase implements Loggable {
         double[] poseArray = pose.getDoubleArray(defaultArray);
         return poseArray;
     }
+
+    @Log
+    public double getYaw() {
+        double[] pose = getTargetPoseInRobotSpace();
+        return pose.length == 0 ? -1 : pose[5];
+    }
+
+    @Log
+    public double getRoll() {
+        double[] pose = getTargetPoseInRobotSpace();
+        return pose.length == 0 ? -1 : pose[3];
+    }
+
+    @Log
+    public double getPitch() {
+        double[] pose = getTargetPoseInRobotSpace();
+        return pose.length == 0 ? -1 : pose[4];
+    }
+
+    @Log
+    public boolean hasTarget() {
+        return m_table.getEntry("tv").getDouble(0) == 1;
+    }
+
+    @Log
+    public double getDistance() {
+        double[] pose = getTargetPoseInRobotSpace();
+        if (!hasTarget() || pose.length == 0) {
+            return -1;
+        }
+        double distance = Math.abs(LimelightConstants.midPoleHeight - LimelightConstants.limelightHeight)
+                / Math.tan(
+                        Math.toRadians(LimelightConstants.limelightAngle + Math.abs(pose[1])));
+        return distance;
+    }
+
+    @Log
+    public String getPose() {
+
+        double[] pose = LimelightHelpers.getTargetPose_CameraSpace(m_tableName);
+        if (pose.length != 0) {
+            DecimalFormat format = new DecimalFormat("#.##");
+            return format.format(pose[0]) + " " + format.format(pose[1]) + " " + format.format(pose[2]) + " "
+                    + format.format(pose[3]) + " " + format.format(pose[4]) + " " + format.format(pose[5]);
+        } else {
+            return "No target :(";
+        }
+    }
+
 }
