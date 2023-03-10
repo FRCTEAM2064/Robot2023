@@ -87,6 +87,7 @@ public class RobotContainer implements Loggable {
                 eventMap.put("raise_intake", new InstantCommand(() -> intakeSubsystem.retract()));
                 eventMap.put("start_intake", new InstantCommand(() -> intakeSubsystem.intakeMotors()));
                 eventMap.put("stop_intake", new InstantCommand(() -> intakeSubsystem.stopMotors()));
+                eventMap.put("balance", new Balance(swerveSubsystem));
 
                 PathPlannerTrajectory path = PathPlanner.loadPath(pathName, AutoConstants.kMaxSpeedMetersPerSecond,
                                 AutoConstants.kMaxAccelerationMetersPerSecondSquared);

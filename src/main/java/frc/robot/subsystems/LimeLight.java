@@ -367,4 +367,12 @@ public class LimeLight extends SubsystemBase implements Loggable {
         double[] poseArray = pose.getDoubleArray(defaultArray);
         return poseArray;
     }
+
+    public double getTID(){
+        NetworkTableEntry tid = m_table.getEntry("tid");
+        double defaultTID = tid.getDouble(-1.0);
+        return defaultTID;
+
+        
+    }
 }
