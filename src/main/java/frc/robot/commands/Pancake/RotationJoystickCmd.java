@@ -20,7 +20,7 @@ public class RotationJoystickCmd extends CommandBase implements Loggable {
   private final Supplier<Integer> pxnPOVfunction;
 
   /** Creates a new RotationJoystickCmd. */
-  public RotationJoystickCmd(Pancake pancakeSubsystem, Supplier<Integer> pxnPOVFunction) {
+  public RotationJoystickCmd(Pancake pancakeSubsystem, Supplier<Integer> pxnPOVFunction){
     // Use addRequirements() here to declare subsystem dependencies.
     this.pancakeSubsystem = pancakeSubsystem;
     this.pxnPOVfunction = pxnPOVFunction;
