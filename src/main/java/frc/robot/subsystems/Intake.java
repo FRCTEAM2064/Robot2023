@@ -67,13 +67,30 @@ public class Intake extends SubsystemBase implements Loggable {
     rollerMotor.set(IntakeConstants.rollerSpeed);
   }
 
+  public void clean() {
+    motor.set(IntakeConstants.motorSpeed * 0.5);
+  }
+
   public void stopMotors() {
     motor.set(0);
     rollerMotor.set(0);
   }
 
+  public void stopIntake() {
+    motor.set(0);
+  }
+
+  public void stopRollers() {
+    rollerMotor.set(0);
+  }
+
   public void setRollerSpeed(double speed) {
     rollerMotor.set(speed);
+  }
+
+  public void reverse() {
+    motor.set(-1 * IntakeConstants.motorSpeed);
+    rollerMotor.set(-1 * IntakeConstants.rollerSpeed);
   }
 
 }

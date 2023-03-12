@@ -51,7 +51,7 @@ public final class Constants implements Loggable {
         public static final boolean kFrontRightTurningEncoderReversed = true;
         public static final boolean kBackRightTurningEncoderReversed = true;
 
-        public static final boolean kFrontLeftDriveEncoderReversed = true;
+        public static final boolean kFrontLeftDriveEncoderReversed = false;
         public static final boolean kBackLeftDriveEncoderReversed = false;
         public static final boolean kFrontRightDriveEncoderReversed = false;
         public static final boolean kBackRightDriveEncoderReversed = true;
@@ -66,7 +66,7 @@ public final class Constants implements Loggable {
         public static final boolean kFrontRightDriveAbsoluteEncoderReversed = false;
         public static final boolean kBackRightDriveAbsoluteEncoderReversed = false;
 
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 4.8;
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 1.2; // 4.8
         public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 1.77;
         public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 6.2;
         public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 0.6;
@@ -74,9 +74,9 @@ public final class Constants implements Loggable {
         public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
-        public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 2;
+        public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
         public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond
-                / 4;
+                / 2;
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 4;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
     }
@@ -132,16 +132,18 @@ public final class Constants implements Loggable {
 
     public static final class ElevatorConstants implements Loggable {
         public static final int winchPort = 12;
-        public static final double winchSpeed = 0.1;
+        public static final double winchSpeed = 0.3;
         public static final int gripperPort = 37;
         public static final double gripperSpeed = 0.2;
 
-        public static final float winchLevelOne = 130;
-        public static final float winchLevelTwo = 176;
+        public static final float winchLevelOne = 150;
+        public static final float winchLevelTwo = 208;
         public static final float winchMin = 0;
+        public static final float winchMax = 212;
+        public static final float winchReady = 35;
         public static final double gripperMax = 0;
         public static final double gripperCone = -8.89;
-        public static final double gripperCube = -2.02;
+        public static final double gripperCube = -4.02;
 
         @Log
         public static double winchP = 0.4;

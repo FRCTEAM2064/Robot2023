@@ -29,7 +29,7 @@ public class Elevator extends SubsystemBase implements Loggable {
     winchMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
     winchMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
     winchMotor.setSoftLimit(SoftLimitDirection.kForward,
-        ElevatorConstants.winchLevelTwo);
+        ElevatorConstants.winchMax);
     winchMotor.setSoftLimit(SoftLimitDirection.kReverse,
         ElevatorConstants.winchMin);
 

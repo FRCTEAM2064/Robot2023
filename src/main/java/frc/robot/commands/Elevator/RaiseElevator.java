@@ -23,7 +23,7 @@ public class RaiseElevator extends PIDCommand {
         // This should return the measurement
         () -> elevatorSubsystem.getWinchPos(),
         // This should return the setpoint (can also be a constant)
-        isHigh ? ElevatorConstants.winchLevelOne : ElevatorConstants.winchLevelTwo,
+        isHigh ? ElevatorConstants.winchLevelTwo : ElevatorConstants.winchLevelOne,
         // This uses the output
         output -> {
           System.out.println("raising: " + output);

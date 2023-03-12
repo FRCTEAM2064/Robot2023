@@ -23,7 +23,7 @@ public class PinchGripper extends PIDCommand {
         // This should return the measurement
         () -> elevatorSubsystem.getGripperPos(),
         // This should return the setpoint (can also be a constant)
-        isCube ? ElevatorConstants.gripperCube : ElevatorConstants.gripperMax,
+        isCube ? ElevatorConstants.gripperCube : ElevatorConstants.gripperCone,
         // This uses the output
         output -> {
           System.out.println("pinching: " + output);

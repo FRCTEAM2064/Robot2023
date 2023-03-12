@@ -9,6 +9,7 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -46,15 +47,27 @@ public class RobotContainer implements Loggable {
                                 () -> driverJoystick.getRawAxis(1), // y axis
                                 () -> -driverTurnJoystick.getRawAxis(0), // turning speed
                                 () -> !driverJoystick.getRawButton(1), // field oriented button
-                                () -> driverJoystick.getRawButton(1)));
+                                () -> driverTurnJoystick.getRawButton(1)));
                 pancakeSubsystem.setDefaultCommand(
                                 new RotationJoystickCmd(pancakeSubsystem, () -> pxnController.getPOV()));
+                elevatorSubsystem.setDefaultCommand(new ElevatorJoystickCmd(elevatorSubsystem, () -> pxnController.getPOV()));
                 configureButtonBindings();
+
+                SmartDashboard.putData("Raise Elevator High", new RaiseElevator(elevatorSubsystem, true));
+                SmartDashboard.putData("Raise Elevator Low", new RaiseElevator(elevatorSubsystem, false));
+                SmartDashboard.putData("Lower Elevator", new LowerElevator(elevatorSubsystem));
+                SmartDashboard.putData("Start Intake", new InstantCommand(() -> intakeSubsystem.clean()));
+                SmartDashboard.putData("Reverse Intake", new InstantCommand(() -> intakeSubsystem.reverse()));
+                SmartDashboard.putData("Stop Intake", new InstantCommand(() -> intakeSubsystem.stopMotors()));
+                SmartDashboard.putData("Ready Elevator", new ReadyElevator(elevatorSubsystem));
+                SmartDashboard.putData("Release Gripper", new ReleaseGripper(elevatorSubsystem));
+                SmartDashboard.putData("Gripper Cone", new PinchGripper(elevatorSubsystem, false));
+                SmartDashboard.putData("Gripper Cube", new PinchGripper(elevatorSubsystem, true));
         }
 
         private void configureButtonBindings() {
-                new JoystickButton(driverTurnJoystick, 1)
-                                .whileTrue((new MoveToBestTag(swerveSubsystem, limeLight)));
+                new JoystickButton(driverTurnJoystick, 2)
+                                .onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading()));
 
                 new JoystickButton(driverJoystick, 8).whileTrue(new Balance(swerveSubsystem));
                 new JoystickButton(driverJoystick, 1)
@@ -63,21 +76,20 @@ public class RobotContainer implements Loggable {
 
                 // new JoystickButton(pxnController, pxnButtons.Y).onTrue(new
                 // TurnToBestTag(swerveSubsystem, limeLight));
-                // new JoystickButton(pxnController, pxnButtons.A)
-                // .onTrue(new PinchGripper(elevatorSubsystem, true));
-                // new JoystickButton(pxnController, pxnButtons.B)
-                // .onTrue(new PinchGripper(elevatorSubsystem, false));
+                new JoystickButton(pxnController, pxnButtons.X)
+                .onTrue(new PinchGripper(elevatorSubsystem, true));
+                new JoystickButton(pxnController, pxnButtons.Y)
+                .onTrue(new PinchGripper(elevatorSubsystem, false));
                 new JoystickButton(pxnController, pxnButtons.L1)
-                                .onTrue(new ReleaseGripper(elevatorSubsystem));
+                                .onTrue(new ReleaseGripper(elevatorSubsystem).andThen(new WaitCommand(1)).andThen(new LowerElevator(elevatorSubsystem)));
+                new JoystickButton(pxnController, pxnButtons.R1)
+                                .onTrue(new InstantCommand(() -> intakeSubsystem.reverse()))
+                                .onFalse(new InstantCommand(() -> intakeSubsystem.stopMotors()));
 
                 new JoystickButton(pxnController, pxnButtons.A)
-                                .onTrue(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0.5))
-                                                .alongWith(new PrintCommand("going up")))
-                                .onFalse(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0)));
+                                .onTrue(new RaiseElevator(elevatorSubsystem, true));
                 new JoystickButton(pxnController, pxnButtons.B)
-                                .onTrue(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(-0.5))
-                                                .alongWith(new PrintCommand("going down")))
-                                .onFalse(new InstantCommand(() -> elevatorSubsystem.setWinchSpeed(0)));
+                                .onTrue(new RaiseElevator(elevatorSubsystem, false));
 
         }
 
