@@ -36,9 +36,7 @@ public class Intake extends SubsystemBase implements Loggable {
     motor = new CANSparkMax(IntakeConstants.rightMotorPort, MotorType.kBrushless);
     rollerMotor = new CANSparkMax(IntakeConstants.rollerPort, MotorType.kBrushless);
 
-    rollerMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
-    rollerMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
-
+    motor.setSmartCurrentLimit(30);
   }
 
   @Override
@@ -68,7 +66,7 @@ public class Intake extends SubsystemBase implements Loggable {
   }
 
   public void clean() {
-    motor.set(IntakeConstants.motorSpeed * 0.5);
+    motor.set(IntakeConstants.motorSpeed * 0.2);
   }
 
   public void stopMotors() {
@@ -89,8 +87,17 @@ public class Intake extends SubsystemBase implements Loggable {
   }
 
   public void reverse() {
-    motor.set(-1 * IntakeConstants.motorSpeed);
+    motor.set(-1);
     rollerMotor.set(-1 * IntakeConstants.rollerSpeed);
+  }
+
+  public void hold() {
+    motor.set(IntakeConstants.motorSpeed * 0.2);
+    rollerMotor.set(-1 * IntakeConstants.rollerSpeed);
+  }
+
+  public void setCurrentLimit(int limit) {
+    motor.setSmartCurrentLimit(limit);
   }
 
 }

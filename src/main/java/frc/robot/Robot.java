@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
 
         Logger.configureLoggingAndConfig(this, false);
 
-        CameraServer.startAutomaticCapture();
+        // CameraServer.startAutomaticCapture();
     }
 
     /**

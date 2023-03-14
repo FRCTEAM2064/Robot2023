@@ -43,7 +43,7 @@ public class Elevator extends SubsystemBase implements Loggable {
     gripperMotor.setSoftLimit(SoftLimitDirection.kForward,
         (float) ElevatorConstants.gripperMax);
     gripperMotor.setSoftLimit(SoftLimitDirection.kReverse,
-        (float) ElevatorConstants.gripperCone);
+        (float) ElevatorConstants.gripperMin);
   }
 
   public void setWinchSpeed(double speed) {

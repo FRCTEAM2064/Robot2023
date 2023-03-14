@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.Elevator;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
+// NOTE: Consider using this command inline, rather than writing a subclass.
+// For more
+// // information, see:
+// //
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ReleaseGripper extends PIDCommand {
     private final Elevator elevatorSubsystem;
@@ -19,7 +21,8 @@ public class ReleaseGripper extends PIDCommand {
     public ReleaseGripper(Elevator elevatorSubsystem) {
         super(
                 // The controller that the command will use
-                new PIDController(ElevatorConstants.gripperP, ElevatorConstants.gripperI, ElevatorConstants.gripperD),
+                new PIDController(ElevatorConstants.gripperP, ElevatorConstants.gripperI,
+                        ElevatorConstants.gripperD),
                 // This should return the measurement
                 () -> elevatorSubsystem.getGripperPos(),
                 // This should return the setpoint (can also be a constant)

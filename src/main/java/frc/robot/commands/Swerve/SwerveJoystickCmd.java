@@ -49,10 +49,10 @@ public class SwerveJoystickCmd extends CommandBase {
         // to account for joystick drift and stuff)
         xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed : 0.0;
         if (slowSpeed.get())
-            xSpeed *= 0.5;
+            xSpeed *= 0.2;
         ySpeed = Math.abs(ySpeed) > OIConstants.kDeadband ? ySpeed : 0.0;
         if (slowSpeed.get())
-            ySpeed *= 0.5;
+            ySpeed *= 0.2;
         turningSpeed = Math.abs(turningSpeed) > OIConstants.kDeadband ? turningSpeed : 0.0;
 
         // 3. calculate actual speeds to send to bot

@@ -13,13 +13,14 @@ import frc.robot.subsystems.Intake;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class StartIntake extends SequentialCommandGroup {
   /** Creates a new StartIntake. */
-  Intake intakeSubsystem; 
+  Intake intakeSubsystem;
+
   public StartIntake(Intake intakeSubsystem) {
     this.intakeSubsystem = intakeSubsystem;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(() -> intakeSubsystem.extend()), new InstantCommand(()-> intakeSubsystem.intakeMotors())
-    );
+        new InstantCommand(() -> intakeSubsystem.extend()), new InstantCommand(() -> intakeSubsystem.intakeMotors()));
+    addRequirements(intakeSubsystem);
   }
 }
