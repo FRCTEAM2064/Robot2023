@@ -9,8 +9,6 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.PancakeConstants;
-import frc.robot.subsystems.Pancake;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import io.github.oblarg.oblog.Loggable;
@@ -21,7 +19,7 @@ public class ElevatorJoystickCmd extends CommandBase implements Loggable {
   private final Supplier<Integer> pxnPOVfunction;
 
   /** Creates a new ElevatorJoystickCmd. */
-  public ElevatorJoystickCmd(Elevator elevatorSubsystem, Supplier<Integer> pxnPOVFunction){
+  public ElevatorJoystickCmd(Elevator elevatorSubsystem, Supplier<Integer> pxnPOVFunction) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.elevatorSubsystem = elevatorSubsystem;
     this.pxnPOVfunction = pxnPOVFunction;
@@ -39,15 +37,14 @@ public class ElevatorJoystickCmd extends CommandBase implements Loggable {
   public void execute() {
     SmartDashboard.putNumber("POV", pxnPOVfunction.get());
     if (pxnPOVfunction.get() == -1) {
-        elevatorSubsystem.stopWinch();
+      elevatorSubsystem.stopWinch();
     }
     Integer val = pxnPOVfunction.get();
     boolean neg = val >= 180;
-   if (val == 0) {
+    if (val == 0) {
       elevatorSubsystem.raiseElevator();
-    }
-    else if (val == 180) {
-        elevatorSubsystem.lowerElevator();
+    } else if (val == 180) {
+      elevatorSubsystem.lowerElevator();
     }
   }
 

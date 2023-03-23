@@ -10,12 +10,12 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.PancakeConstants;
-import frc.robot.subsystems.Pancake;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Intake;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
+
+// UNUSED FILE
 
 public class IntakeDefaultCmd extends CommandBase implements Loggable {
     private final Intake intakeSubsystem;

@@ -410,7 +410,7 @@ public class LimeLight extends SubsystemBase implements Loggable {
     @Log
     public String getPose() {
 
-        double[] pose = LimelightHelpers.getTargetPose_CameraSpace(m_tableName);
+        double[] pose = LimelightHelpers.getTargetPose_RobotSpace(m_tableName);
         if (pose.length != 0) {
             DecimalFormat format = new DecimalFormat("#.##");
             return format.format(pose[0]) + " " + format.format(pose[1]) + " " + format.format(pose[2]) + " "

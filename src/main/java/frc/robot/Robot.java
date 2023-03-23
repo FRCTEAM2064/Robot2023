@@ -9,6 +9,8 @@ import java.nio.file.FileSystem;
 import java.util.HashMap;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -40,6 +42,9 @@ public class Robot extends TimedRobot {
     private String m_autoSelected;
     private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+    private AddressableLED leds;
+    private AddressableLEDBuffer ledBuffer;
+
     /**
      * This function is run when the robot is first started up and should be used
      * for any
@@ -67,6 +72,12 @@ public class Robot extends TimedRobot {
         Logger.configureLoggingAndConfig(this, false);
 
         // CameraServer.startAutomaticCapture();
+
+        leds = new AddressableLED(9);
+        ledBuffer = new AddressableLEDBuffer(60);
+        leds.setLength(ledBuffer.getLength());
+        leds.setData(ledBuffer);
+        leds.start();
     }
 
     /**

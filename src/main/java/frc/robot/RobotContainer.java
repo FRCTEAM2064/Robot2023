@@ -16,13 +16,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.*;
 import frc.robot.Constants.OIConstants.pxnButtons;
 import frc.robot.commands.Elevator.*;
-import frc.robot.commands.Intake.IntakeDefaultCmd;
 import frc.robot.commands.Intake.StartIntake;
 import frc.robot.commands.Intake.StopIntake;
-import frc.robot.commands.Pancake.*;
 import frc.robot.commands.Swerve.*;
 import frc.robot.commands.Vision.*;
-import frc.robot.commands.Pancake.RotationJoystickCmd;
 import frc.robot.subsystems.*;
 import io.github.oblarg.oblog.Loggable;
 
@@ -31,7 +28,6 @@ public class RobotContainer implements Loggable {
         private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
         private final LimeLight limeLight = new LimeLight();
         private final Intake intakeSubsystem = new Intake();
-        private final Pancake pancakeSubsystem = new Pancake();
         private final Elevator elevatorSubsystem = new Elevator();
 
         private final ElevatorConstants constants = new ElevatorConstants();
@@ -49,12 +45,8 @@ public class RobotContainer implements Loggable {
                                 () -> -driverTurnJoystick.getRawAxis(0), // turning speed
                                 () -> !driverJoystick.getRawButton(1), // field oriented button
                                 () -> driverTurnJoystick.getRawButton(1)));
-                pancakeSubsystem.setDefaultCommand(
-                                new RotationJoystickCmd(pancakeSubsystem, () -> pxnController.getPOV()));
                 elevatorSubsystem.setDefaultCommand(
                                 new ElevatorJoystickCmd(elevatorSubsystem, () -> pxnController.getPOV()));
-                intakeSubsystem.setDefaultCommand(
-                                new IntakeDefaultCmd(intakeSubsystem));
                 configureButtonBindings();
 
                 SmartDashboard.putData("Raise Elevator High", new RaiseElevator(elevatorSubsystem, true));
@@ -73,7 +65,7 @@ public class RobotContainer implements Loggable {
 
         private void configureButtonBindings() {
                 new JoystickButton(driverTurnJoystick, 2)
-                                .onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading(), intakeSubsystem));
+                                .onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading(), swerveSubsystem));
 
                 new JoystickButton(driverJoystick, 8).whileTrue(new Balance(swerveSubsystem));
                 new JoystickButton(driverJoystick, 1)
