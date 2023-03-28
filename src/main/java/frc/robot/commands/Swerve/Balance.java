@@ -10,19 +10,17 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.SwerveSubsystem;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
 
-public class Balance extends CommandBase implements Loggable {
+public class Balance extends CommandBase {
   private final SwerveSubsystem swerveSubsystem;
-
-  // private PIDController rollController;
-  // private PIDController pitchController;
+  private final LEDs leds;
 
   /** Creates a new Balance. */
-  public Balance(SwerveSubsystem swerveSubsystem) {
+  public Balance(SwerveSubsystem swerveSubsystem, LEDs leds) {
     this.swerveSubsystem = swerveSubsystem;
+    this.leds = leds;
 
     addRequirements(swerveSubsystem);
   }
@@ -30,37 +28,20 @@ public class Balance extends CommandBase implements Loggable {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // rollController = new PIDController(DriveConstants.balanceRollP,
-    // DriveConstants.balanceRollI,
-    // DriveConstants.balanceRollD);
-    // pitchController = new PIDController(DriveConstants.balancePitchP,
-    // DriveConstants.balancePitchI,
-    // DriveConstants.balancePitchD);
-
-    // rollController.setSetpoint(-1);
-    // pitchController.setSetpoint(-0.3);
-
-    // rollController.setTolerance(4);
-    // pitchController.setTolerance(4);
+    leds.setPattern("balance");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // double xSpeed = pitchController.calculate(swerveSubsystem.getPitch());
-    // double ySpeed = rollController.calculate(swerveSubsystem.getRoll());
-
-    // xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed : 0.0;
-    // ySpeed = Math.abs(ySpeed) > OIConstants.kDeadband ? ySpeed : 0.0;
-
     double pitch = swerveSubsystem.getPitch();
     double roll = swerveSubsystem.getRoll();
 
-    double pitchDiff = (-0.56 - pitch);
-    double rollDiff = -(-0.78 - roll);
+    double pitchDiff = (1.39 - pitch);
+    double rollDiff = (1.48 - roll);
 
-    double xSpeed = 3 * pitchDiff / 140;
-    double ySpeed = 3 * rollDiff / 140;
+    double ySpeed = 3 * pitchDiff / 140;
+    double xSpeed = 3 * rollDiff / 140;
 
     // System.out.println(roll);
 
@@ -71,8 +52,7 @@ public class Balance extends CommandBase implements Loggable {
 
     // 4. Construct desired chassis speeds
     ChassisSpeeds chassisSpeeds;
-    chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-        xSpeed, ySpeed, 0, swerveSubsystem.getRotation2d());
+    chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, 0);
 
     // 5. Convert chassis speeds to individual module states
     SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
@@ -84,12 +64,19 @@ public class Balance extends CommandBase implements Loggable {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    leds.setPattern("rainbow");
     swerveSubsystem.stopModules();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    double pitch = swerveSubsystem.getPitch();
+    double roll = swerveSubsystem.getRoll();
+
+    double pitchDiff = (1.39 - pitch);
+    double rollDiff = (1.48 - roll);
+
+    return Math.abs(pitchDiff) < 2 && Math.abs(rollDiff) < 2;
   }
 }

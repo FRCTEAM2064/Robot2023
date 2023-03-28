@@ -45,7 +45,7 @@ public class RobotContainer implements Loggable {
                                 () -> driverJoystick.getRawAxis(1), // y axis
                                 () -> -driverTurnJoystick.getRawAxis(0), // turning speed
                                 () -> !driverJoystick.getRawButton(1), // field oriented button
-                                () -> driverTurnJoystick.getRawButton(1)));
+                                () -> driverTurnJoystick.getRawButton(1), leds));
                 elevatorSubsystem.setDefaultCommand(
                                 new ElevatorJoystickCmd(elevatorSubsystem, () -> pxnController.getPOV()));
                 configureButtonBindings();
@@ -68,7 +68,7 @@ public class RobotContainer implements Loggable {
                 new JoystickButton(driverTurnJoystick, 2)
                                 .onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading(), swerveSubsystem));
 
-                new JoystickButton(driverJoystick, 8).whileTrue(new Balance(swerveSubsystem));
+                new JoystickButton(driverJoystick, 8).whileTrue(new Balance(swerveSubsystem, leds));
                 new JoystickButton(driverJoystick, 1)
                                 .whileTrue(new StartIntake(intakeSubsystem))
                                 .onFalse(new StopIntake(intakeSubsystem));
@@ -102,7 +102,7 @@ public class RobotContainer implements Loggable {
                                                 new InstantCommand(() -> intakeSubsystem.reverse(), intakeSubsystem),
                                                 new WaitCommand(5), new InstantCommand(
                                                                 () -> intakeSubsystem.stopIntake(), intakeSubsystem)));
-                eventMap.put("balance", new Balance(swerveSubsystem));
+                eventMap.put("balance", new Balance(swerveSubsystem, leds));
 
                 PathPlannerTrajectory path = PathPlanner.loadPath(pathName, AutoConstants.kMaxSpeedMetersPerSecond,
                                 AutoConstants.kMaxAccelerationMetersPerSecondSquared);

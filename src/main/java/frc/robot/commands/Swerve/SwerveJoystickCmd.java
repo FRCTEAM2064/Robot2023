@@ -9,6 +9,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class SwerveJoystickCmd extends CommandBase {
@@ -18,10 +19,11 @@ public class SwerveJoystickCmd extends CommandBase {
     private final Supplier<Boolean> fieldOrientedFunction;
     private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
     private final Supplier<Boolean> slowSpeed;
+    private final LEDs leds;
 
     public SwerveJoystickCmd(SwerveSubsystem swerveSubsystem,
             Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction,
-            Supplier<Boolean> fieldOrientedFunction, Supplier<Boolean> slowFunction) {
+            Supplier<Boolean> fieldOrientedFunction, Supplier<Boolean> slowFunction, LEDs leds) {
         this.swerveSubsystem = swerveSubsystem;
         this.xSpdFunction = xSpdFunction;
         this.ySpdFunction = ySpdFunction;
@@ -31,6 +33,7 @@ public class SwerveJoystickCmd extends CommandBase {
         this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+        this.leds = leds;
         addRequirements(swerveSubsystem);
     }
 
@@ -81,6 +84,14 @@ public class SwerveJoystickCmd extends CommandBase {
 
         // 6. Output each module states to wheels
         swerveSubsystem.setModuleStates(moduleStates);
+
+        if (turningSpeed < 0) {
+            leds.setDir("left");
+        } else if (turningSpeed > 0) {
+            leds.setDir("right");
+        } else {
+            leds.setDir("");
+        }
     }
 
     @Override
