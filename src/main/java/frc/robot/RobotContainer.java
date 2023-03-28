@@ -29,6 +29,7 @@ public class RobotContainer implements Loggable {
         private final LimeLight limeLight = new LimeLight();
         private final Intake intakeSubsystem = new Intake();
         private final Elevator elevatorSubsystem = new Elevator();
+        private final LEDs leds = new LEDs();
 
         private final ElevatorConstants constants = new ElevatorConstants();
         private final DriveConstants dConstants = new DriveConstants();

@@ -40,12 +40,12 @@ public final class Constants implements Loggable {
         public static final int kFrontLeftDriveMotorPort = 8;
         public static final int kBackLeftDriveMotorPort = 16;
         public static final int kFrontRightDriveMotorPort = 999;
-        public static final int kBackRightDriveMotorPort = 999;
+        public static final int kBackRightDriveMotorPort = 998;
 
         public static final int kFrontLeftTurningMotorPort = 19;
         public static final int kBackLeftTurningMotorPort = 22;
-        public static final int kFrontRightTurningMotorPort = 999;
-        public static final int kBackRightTurningMotorPort = 999;
+        public static final int kFrontRightTurningMotorPort = 997;
+        public static final int kBackRightTurningMotorPort = 996;
 
         public static final boolean kFrontLeftTurningEncoderReversed = true;
         public static final boolean kBackLeftTurningEncoderReversed = true;
@@ -163,7 +163,7 @@ public final class Constants implements Loggable {
     public static final class IntakeConstants {
         public static final int leftMotorPort = 33;
         public static final int rightMotorPort = 23;
-        public static final int rollerPort = 19;
+        public static final int rollerPort =994;
 
         public static final double motorSpeed = 0.7;
         public static final double rollerSpeed = 0.6;
