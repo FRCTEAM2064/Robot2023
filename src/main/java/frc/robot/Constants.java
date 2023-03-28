@@ -163,7 +163,7 @@ public final class Constants implements Loggable {
     public static final class IntakeConstants {
         public static final int leftMotorPort = 33;
         public static final int rightMotorPort = 23;
-        public static final int rollerPort =994;
+        public static final int rollerPort = 994;
 
         public static final double motorSpeed = 0.7;
         public static final double rollerSpeed = 0.6;
@@ -184,5 +184,10 @@ public final class Constants implements Loggable {
         public static final Color8Bit BLUE = new Color8Bit(0, 0, 204);
         public static final Color8Bit PURPLE = new Color8Bit(152, 16, 201);
         public static final Color8Bit COLORS[] = { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE };
+    }
+
+    public static final class TreadmillConstants {
+        public static final int treadmillId = 7;
+        public static final double treadmillSpeed = 0.4;
     }
 }

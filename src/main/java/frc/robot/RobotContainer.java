@@ -19,17 +19,16 @@ import frc.robot.commands.Elevator.*;
 import frc.robot.commands.Intake.StartIntake;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Swerve.*;
-import frc.robot.commands.Vision.*;
 import frc.robot.subsystems.*;
 import io.github.oblarg.oblog.Loggable;
 
 public class RobotContainer implements Loggable {
 
         private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-        private final LimeLight limeLight = new LimeLight();
         private final Intake intakeSubsystem = new Intake();
         private final Elevator elevatorSubsystem = new Elevator();
         private final LEDs leds = new LEDs();
+        private final Treadmill treadmill = new Treadmill();
 
         private final ElevatorConstants constants = new ElevatorConstants();
         private final DriveConstants dConstants = new DriveConstants();
@@ -70,8 +69,8 @@ public class RobotContainer implements Loggable {
 
                 new JoystickButton(driverJoystick, 8).whileTrue(new Balance(swerveSubsystem, leds));
                 new JoystickButton(driverJoystick, 1)
-                                .whileTrue(new StartIntake(intakeSubsystem))
-                                .onFalse(new StopIntake(intakeSubsystem));
+                                .whileTrue(new StartIntake(intakeSubsystem, treadmill))
+                                .onFalse(new StopIntake(intakeSubsystem, treadmill));
 
                 new JoystickButton(pxnController, pxnButtons.X)
                                 .onTrue(new PinchGripper(elevatorSubsystem, true));

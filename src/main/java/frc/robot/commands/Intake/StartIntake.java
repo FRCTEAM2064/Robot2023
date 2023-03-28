@@ -7,6 +7,7 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Treadmill;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -15,12 +16,13 @@ public class StartIntake extends SequentialCommandGroup {
   /** Creates a new StartIntake. */
   Intake intakeSubsystem;
 
-  public StartIntake(Intake intakeSubsystem) {
+  public StartIntake(Intake intakeSubsystem, Treadmill treadmillSubsystem) {
     this.intakeSubsystem = intakeSubsystem;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new InstantCommand(() -> intakeSubsystem.extend()), new InstantCommand(() -> intakeSubsystem.intakeMotors()));
-    addRequirements(intakeSubsystem);
+        new InstantCommand(() -> intakeSubsystem.extend()), new InstantCommand(() -> intakeSubsystem.intakeMotors()),
+        new InstantCommand(() -> treadmillSubsystem.startTreadmill()));
+    addRequirements(intakeSubsystem, treadmillSubsystem);
   }
 }

@@ -97,29 +97,29 @@ public class AddressableLEDs {
             state.clear();
             state.put("state", "breathe");
             state.put("loop", 1);
-            state.put("factor", 1);
+            state.put("factor", 1.0);
             state.put("brightening", true);
 
             commitColor();
         }
-        int loop = Math.max(1, (int) state.get("factor"));
+        int loop = (int) Math.max(1, (double) state.get("factor"));
         setColor(new Color8Bit((int) color.red / loop, (int) color.green / loop,
                 (int) color.blue / loop));
 
         if ((int) state.get("loop") == 1) {
             if ((boolean) state.get("brightening")) {
-                state.put("factor", (int) state.get("factor") + 1);
+                state.put("factor", (double) state.get("factor") + 0.5);
             } else {
-                state.put("factor", (int) state.get("factor") - 1);
+                state.put("factor", (double) state.get("factor") - 0.5);
             }
         }
 
-        if ((boolean) state.get("brightening") && (int) state.get("factor") >= 10) {
+        if ((boolean) state.get("brightening") && (double) state.get("factor") >= 10) {
             state.put("brightening", false);
-            state.put("factor", 9);
-        } else if ((boolean) state.get("brightening") == false && (int) state.get("factor") <= 3) {
+            state.put("factor", 9.0);
+        } else if ((boolean) state.get("brightening") == false && (double) state.get("factor") <= 3) {
             state.put("brightening", true);
-            state.put("factor", 4);
+            state.put("factor", 4.0);
         }
 
         state.put("loop", (int) state.get("loop") + 1);
