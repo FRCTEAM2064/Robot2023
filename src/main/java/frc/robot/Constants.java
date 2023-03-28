@@ -37,15 +37,15 @@ public final class Constants implements Loggable {
 
         // CAN ports are set
 
-        public static final int kFrontLeftDriveMotorPort = 15;
+        public static final int kFrontLeftDriveMotorPort = 8;
         public static final int kBackLeftDriveMotorPort = 16;
-        public static final int kFrontRightDriveMotorPort = 18;
-        public static final int kBackRightDriveMotorPort = 8;
+        public static final int kFrontRightDriveMotorPort = 999;
+        public static final int kBackRightDriveMotorPort = 999;
 
-        public static final int kFrontLeftTurningMotorPort = 35;
-        public static final int kBackLeftTurningMotorPort = 7;
-        public static final int kFrontRightTurningMotorPort = 17;
-        public static final int kBackRightTurningMotorPort = 22;
+        public static final int kFrontLeftTurningMotorPort = 19;
+        public static final int kBackLeftTurningMotorPort = 22;
+        public static final int kFrontRightTurningMotorPort = 999;
+        public static final int kBackRightTurningMotorPort = 999;
 
         public static final boolean kFrontLeftTurningEncoderReversed = true;
         public static final boolean kBackLeftTurningEncoderReversed = true;

@@ -73,11 +73,6 @@ public class Robot extends TimedRobot {
 
         // CameraServer.startAutomaticCapture();
 
-        leds = new AddressableLED(9);
-        ledBuffer = new AddressableLEDBuffer(60);
-        leds.setLength(ledBuffer.getLength());
-        leds.setData(ledBuffer);
-        leds.start();
     }
 
     /**
