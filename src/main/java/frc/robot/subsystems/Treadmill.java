@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TreadmillConstants;;
 
@@ -16,6 +18,8 @@ public class Treadmill extends SubsystemBase {
   /** Creates a new Treadmill. */
   public Treadmill() {
     motor = new CANSparkMax(TreadmillConstants.treadmillId, MotorType.kBrushless);
+    SmartDashboard.putData("Start Treadmill", new InstantCommand(() -> startTreadmill()));
+    SmartDashboard.putData("Stop Treadmill", new InstantCommand(() -> stopTreadmill()));
   }
 
   public void startTreadmill() {

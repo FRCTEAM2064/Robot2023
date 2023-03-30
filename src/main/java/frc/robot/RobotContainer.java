@@ -46,12 +46,13 @@ public class RobotContainer implements Loggable {
                                 () -> !driverJoystick.getRawButton(1), // field oriented button
                                 () -> driverTurnJoystick.getRawButton(1), leds));
                 elevatorSubsystem.setDefaultCommand(
-                                new ElevatorJoystickCmd(elevatorSubsystem, () -> pxnController.getPOV()));
+                                new ElevatorJoystickCmd(elevatorSubsystem, leds, () -> pxnController.getPOV()));
                 configureButtonBindings();
 
-                SmartDashboard.putData("Raise Elevator High", new RaiseElevator(elevatorSubsystem, true));
-                SmartDashboard.putData("Raise Elevator Low", new RaiseElevator(elevatorSubsystem, false));
-                SmartDashboard.putData("Lower Elevator", new LowerElevator(elevatorSubsystem));
+                SmartDashboard.putData("Raise Elevator High", new RaiseElevator(elevatorSubsystem, leds, 2));
+                SmartDashboard.putData("Raise Elevator Low", new RaiseElevator(elevatorSubsystem, leds, 1));
+                SmartDashboard.putData("Raise Elevator Ground", new RaiseElevator(elevatorSubsystem, leds, 0));
+                SmartDashboard.putData("Lower Elevator", new LowerElevator(elevatorSubsystem, leds));
                 SmartDashboard.putData("Start Intake", new InstantCommand(() -> intakeSubsystem.clean()));
                 SmartDashboard.putData("Reverse Intake", new InstantCommand(() -> intakeSubsystem.reverse()));
                 SmartDashboard.putData("Stop Intake", new InstantCommand(() -> intakeSubsystem.stopMotors()));
@@ -76,14 +77,6 @@ public class RobotContainer implements Loggable {
                                 .onTrue(new PinchGripper(elevatorSubsystem, true));
                 new JoystickButton(pxnController, pxnButtons.Y)
                                 .onTrue(new PinchGripper(elevatorSubsystem, false));
-                new JoystickButton(pxnController, pxnButtons.L1)
-                                .onTrue(new ReleaseGripper(elevatorSubsystem).andThen(new WaitCommand(1))
-                                                .andThen(new LowerElevator(elevatorSubsystem)));
-
-                new JoystickButton(pxnController, pxnButtons.A)
-                                .onTrue(new RaiseElevator(elevatorSubsystem, true));
-                new JoystickButton(pxnController, pxnButtons.B)
-                                .onTrue(new RaiseElevator(elevatorSubsystem, false));
 
                 new JoystickButton(pxnController, pxnButtons.R1)
                                 .whileTrue(new InstantCommand(() -> intakeSubsystem.reverse(), intakeSubsystem));

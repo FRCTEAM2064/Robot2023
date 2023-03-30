@@ -23,7 +23,7 @@ public class Intake extends SubsystemBase implements Loggable {
   Compressor intakeCompressor;
   DoubleSolenoid intakeSolenoid;
 
-  private CANSparkMax motor, rollerMotor;
+  private CANSparkMax motor;
 
   /** Creates a new Intake. */
   public Intake() {
@@ -33,8 +33,7 @@ public class Intake extends SubsystemBase implements Loggable {
     intakeSolenoid = new DoubleSolenoid(20, PneumaticsModuleType.REVPH, 0, 1);
     intakeSolenoid.set(kOff);
 
-    motor = new CANSparkMax(IntakeConstants.rightMotorPort, MotorType.kBrushless);
-    rollerMotor = new CANSparkMax(IntakeConstants.rollerPort, MotorType.kBrushless);
+    motor = new CANSparkMax(IntakeConstants.leftMotorPort, MotorType.kBrushless);
 
     motor.setSmartCurrentLimit(30);
   }
@@ -62,7 +61,6 @@ public class Intake extends SubsystemBase implements Loggable {
 
   public void intakeMotors() {
     motor.set(IntakeConstants.motorSpeed);
-    rollerMotor.set(IntakeConstants.rollerSpeed);
   }
 
   public void clean() {
@@ -71,29 +69,18 @@ public class Intake extends SubsystemBase implements Loggable {
 
   public void stopMotors() {
     motor.set(0);
-    rollerMotor.set(0);
   }
 
   public void stopIntake() {
     motor.set(0);
   }
 
-  public void stopRollers() {
-    rollerMotor.set(0);
-  }
-
-  public void setRollerSpeed(double speed) {
-    rollerMotor.set(speed);
-  }
-
   public void reverse() {
     motor.set(-1);
-    rollerMotor.set(-1 * IntakeConstants.rollerSpeed);
   }
 
   public void hold() {
     motor.set(IntakeConstants.motorSpeed * 0.2);
-    rollerMotor.set(-1 * IntakeConstants.rollerSpeed);
   }
 
   public void setCurrentLimit(int limit) {

@@ -39,13 +39,13 @@ public final class Constants implements Loggable {
 
         public static final int kFrontLeftDriveMotorPort = 8;
         public static final int kBackLeftDriveMotorPort = 16;
-        public static final int kFrontRightDriveMotorPort = 999;
-        public static final int kBackRightDriveMotorPort = 998;
+        public static final int kFrontRightDriveMotorPort = 43;
+        public static final int kBackRightDriveMotorPort = 10;
 
         public static final int kFrontLeftTurningMotorPort = 19;
         public static final int kBackLeftTurningMotorPort = 22;
-        public static final int kFrontRightTurningMotorPort = 997;
-        public static final int kBackRightTurningMotorPort = 996;
+        public static final int kFrontRightTurningMotorPort = 21;
+        public static final int kBackRightTurningMotorPort = 29;
 
         public static final boolean kFrontLeftTurningEncoderReversed = true;
         public static final boolean kBackLeftTurningEncoderReversed = true;
@@ -58,19 +58,19 @@ public final class Constants implements Loggable {
         public static final boolean kBackRightDriveEncoderReversed = true;
 
         public static final int kFrontLeftDriveAbsoluteEncoderPort = 1;
-        public static final int kBackLeftDriveAbsoluteEncoderPort = 2;
+        public static final int kBackLeftDriveAbsoluteEncoderPort = 3;
         public static final int kFrontRightDriveAbsoluteEncoderPort = 0;
-        public static final int kBackRightDriveAbsoluteEncoderPort = 3;
+        public static final int kBackRightDriveAbsoluteEncoderPort = 2;
 
         public static final boolean kFrontLeftDriveAbsoluteEncoderReversed = false;
         public static final boolean kBackLeftDriveAbsoluteEncoderReversed = false;
         public static final boolean kFrontRightDriveAbsoluteEncoderReversed = false;
         public static final boolean kBackRightDriveAbsoluteEncoderReversed = false;
 
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 4.8; // 4.8
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 1.77;
-        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 6.2;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 0.6;
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 5.16;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 1.76;
+        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 0.06;
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 1.57;
 
         public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
@@ -132,8 +132,7 @@ public final class Constants implements Loggable {
         public static final int gripperPort = 37;
         public static final double gripperSpeed = 0.2;
 
-        public static final float winchLevelOne = 160;
-        public static final float winchLevelTwo = 208;
+        public static final float[] winchLevels = { 80, 160, 200 };
         public static final float winchMin = 0;
         public static final float winchMax = 210;
         public static final float winchReady = 35;
@@ -161,12 +160,9 @@ public final class Constants implements Loggable {
     }
 
     public static final class IntakeConstants {
-        public static final int leftMotorPort = 33;
-        public static final int rightMotorPort = 23;
-        public static final int rollerPort = 994;
+        public static final int leftMotorPort = 23;
 
         public static final double motorSpeed = 0.7;
-        public static final double rollerSpeed = 0.6;
     }
 
     public static final class LimelightConstants {
@@ -188,6 +184,6 @@ public final class Constants implements Loggable {
 
     public static final class TreadmillConstants {
         public static final int treadmillId = 7;
-        public static final double treadmillSpeed = 0.4;
+        public static final double treadmillSpeed = -0.2;
     }
 }
