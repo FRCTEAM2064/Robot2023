@@ -45,7 +45,10 @@ public class Elevator extends SubsystemBase implements Loggable {
         (float) ElevatorConstants.gripperMax);
     gripperMotor.setSoftLimit(SoftLimitDirection.kReverse,
         (float) ElevatorConstants.gripperMin);
+  }
 
+  @Override
+  public void periodic() {
     SmartDashboard.putData(this);
   }
 
@@ -76,10 +79,12 @@ public class Elevator extends SubsystemBase implements Loggable {
 
   // Methods for gripper control
   public void setGripperSpeed(double speed) {
+    System.out.println("Set gripper speed: " + speed);
     gripperMotor.set(speed);
   }
 
   public void stopGripper() {
+    System.out.println("Stopping gripper");
     gripperMotor.set(0);
   }
 

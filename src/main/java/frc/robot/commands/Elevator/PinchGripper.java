@@ -29,8 +29,11 @@ public class PinchGripper extends PIDCommand {
         isCube ? ElevatorConstants.gripperCube : ElevatorConstants.gripperCone,
         // This uses the output
         output -> {
+          System.out.println("Pinching: " + output);
           elevatorSubsystem.setGripperSpeed(output);
         });
+    System.out.println(ElevatorConstants.gripperP + " " + ElevatorConstants.gripperI + " " +
+        ElevatorConstants.gripperD + " " + elevatorSubsystem.getGripperPos() + " " + ElevatorConstants.gripperCube);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(elevatorSubsystem);
     // Configure additional PID options by calling `getController` here.
