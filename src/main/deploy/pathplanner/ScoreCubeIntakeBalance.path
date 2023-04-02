@@ -1,0 +1,95 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 1.9145438221432,
+        "y": 4.4631015755087065
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.9145438221432007,
+        "y": 4.4631015755087065
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "gripper_cube",
+          "elevator_high",
+          "drop_and_lower"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.505682820393419,
+        "y": 4.664783711511867
+      },
+      "prevControl": {
+        "x": 5.510848536595433,
+        "y": 4.766296015101836
+      },
+      "nextControl": {
+        "x": 7.347320118251348,
+        "y": 4.5789035380154095
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 3.999732990785426,
+        "y": 3.252834795600146
+      },
+      "prevControl": {
+        "x": 7.100581334843222,
+        "y": 3.309489035644737
+      },
+      "nextControl": null,
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "balance"
+        ],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "markers": [
+    {
+      "position": 0.7911931818181813,
+      "names": [
+        "drop_intake",
+        "start_intake"
+      ]
+    },
+    {
+      "position": 1.3585227272727258,
+      "names": [
+        "stop_intake",
+        "raise_intake"
+      ]
+    }
+  ]
+}

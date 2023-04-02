@@ -28,7 +28,6 @@ public class RaiseElevator extends PIDCommand {
         ElevatorConstants.winchLevels[position],
         // This uses the output
         output -> {
-          System.out.println("raising: " + output);
           elevatorSubsystem.setWinchSpeed(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
@@ -41,7 +40,8 @@ public class RaiseElevator extends PIDCommand {
 
   @Override
   public void initialize() {
-    leds.setPattern("elevatorUp");
+    boolean isAbove = getController().getSetpoint() > elevatorSubsystem.getWinchPos();
+    leds.setPattern(isAbove ? "elevatorUp" : "elevatorDown");
   }
 
   // Returns true when the command should end.
@@ -53,6 +53,5 @@ public class RaiseElevator extends PIDCommand {
   @Override
   public void end(boolean interrupted) {
     this.elevatorSubsystem.stopWinch();
-    leds.setPattern("pattern");
   }
 }

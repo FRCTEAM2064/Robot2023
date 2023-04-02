@@ -42,8 +42,8 @@ public class LEDs extends SubsystemBase {
         color_selector.addOption("RED", RED);
         color_selector.setDefaultOption("ALLIANCE", alliance);
 
-        SmartDashboard.putData("LEDS", color_selector);
-        SmartDashboard.putData("Reset LEDs", new InstantCommand(() -> pattern = "pattern"));
+        SmartDashboard.putData("Buttons/LEDS", color_selector);
+        SmartDashboard.putData("Buttons/Reset LEDs", new InstantCommand(() -> pattern = "pattern"));
     }
 
     public void setGamePieceColor(boolean isYellow) {
@@ -75,13 +75,21 @@ public class LEDs extends SubsystemBase {
         this.pattern = pattern;
     }
 
+    public String getPattern() {
+        return pattern;
+    }
+
     @Override
     public void periodic() {
+        alliance = DriverStation.getAlliance() == DriverStation.Alliance.Blue ? BLUE
+                : RED;
+        color_selector.setDefaultOption("ALLIANCE", alliance);
+
         Color8Bit selected = color_selector.getSelected();
         if (pattern == "pattern") {
-            if (dir == "left") {
-                if (leds.state.get("state") != "left") {
-                    leds.state.put("state", "left");
+            if (dir == "right") {
+                if (leds.state.get("state") != "right") {
+                    leds.state.put("state", "right");
                     leds.setInitTurning(selected, 0, 196);
                 }
                 leds.left(segments[0], segments[1]);
@@ -94,9 +102,9 @@ public class LEDs extends SubsystemBase {
                 if ((int) leds.state.get("loop") >= loopTime) {
                     leds.state.put("loop", 0);
                 }
-            } else if (dir == "right") {
-                if (leds.state.get("state") != "right") {
-                    leds.state.put("state", "right");
+            } else if (dir == "left") {
+                if (leds.state.get("state") != "left") {
+                    leds.state.put("state", "left");
                     leds.setInitTurning(selected, 0, 196);
                 }
                 leds.right(segments[0], segments[1]);
@@ -110,7 +118,7 @@ public class LEDs extends SubsystemBase {
                     leds.state.put("loop", 0);
                 }
             } else {
-                leds.breathe(selected);
+                leds.breathe(selected, DriverStation.isEnabled());
             }
         } else if (pattern == "rainbow") {
             leds.rainbow();

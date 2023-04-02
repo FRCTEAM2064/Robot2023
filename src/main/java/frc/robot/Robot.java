@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
             }
             m_chooser.setDefaultOption(kDefaultAuto, kDefaultAuto);
         }
-        SmartDashboard.putData("Autonomous Selection", m_chooser);
+        SmartDashboard.putData("Buttons/Autonomous Selection", m_chooser);
 
         Logger.configureLoggingAndConfig(this, false);
 
@@ -146,6 +146,8 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
+
+        m_robotContainer.teleopInit();
     }
 
     /** This function is called periodically during operator control. */

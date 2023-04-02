@@ -73,7 +73,7 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
     }
 
     public double getHeading() {
-        return Math.IEEEremainder(gyro.getAngle(), 360);
+        return gyro.getAngle();
     }
 
     public Rotation2d getRotation2d() {

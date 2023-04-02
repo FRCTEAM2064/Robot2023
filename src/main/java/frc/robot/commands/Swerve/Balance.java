@@ -40,8 +40,12 @@ public class Balance extends CommandBase {
     double pitchDiff = (1.39 - pitch);
     double rollDiff = (1.48 - roll);
 
-    double ySpeed = 3 * pitchDiff / 140;
-    double xSpeed = 3 * rollDiff / 140;
+    if (pitchDiff < 2 && rollDiff < 2) {
+      leds.setPattern("rainbow");
+    }
+
+    double xSpeed = 3 * pitchDiff / 80;
+    double ySpeed = 3 * rollDiff / 80;
 
     // System.out.println(roll);
 
@@ -64,19 +68,16 @@ public class Balance extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    leds.setPattern("rainbow");
-    swerveSubsystem.stopModules();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double pitch = swerveSubsystem.getPitch();
-    double roll = swerveSubsystem.getRoll();
+    // double pitch = swerveSubsystem.getPitch();
+    // double roll = swerveSubsystem.getRoll();
 
-    double pitchDiff = (1.39 - pitch);
-    double rollDiff = (1.48 - roll);
-
-    return Math.abs(pitchDiff) < 2 && Math.abs(rollDiff) < 2;
+    // double pitchDiff = (1.39 - pitch);
+    // double rollDiff = (1.48 - roll);
+    return false;
   }
 }

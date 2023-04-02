@@ -29,7 +29,6 @@ public class ReleaseGripper extends PIDCommand {
                 ElevatorConstants.gripperMax,
                 // This uses the output
                 output -> {
-                    System.out.println("releasing: " + output);
                     elevatorSubsystem.setGripperSpeed(output);
                 });
         // Use addRequirements() here to declare subsystem dependencies.

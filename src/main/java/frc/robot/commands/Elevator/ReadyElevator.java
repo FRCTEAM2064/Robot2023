@@ -8,15 +8,17 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.LEDs;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ReadyElevator extends PIDCommand {
     private final Elevator elevatorSubsystem;
+    private final LEDs leds;
 
     /** Creates a new ReadyElevator. */
-    public ReadyElevator(Elevator elevatorSubsystem) {
+    public ReadyElevator(Elevator elevatorSubsystem, LEDs leds) {
         super(
                 // The controller that the command will use
                 new PIDController(ElevatorConstants.winchP, ElevatorConstants.winchI, ElevatorConstants.winchD),
@@ -26,14 +28,20 @@ public class ReadyElevator extends PIDCommand {
                 ElevatorConstants.winchReady,
                 // This uses the output
                 output -> {
-                    System.out.println("lowering: " + output);
                     elevatorSubsystem.setWinchSpeed(output);
                 });
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(elevatorSubsystem);
+        addRequirements(elevatorSubsystem, leds);
         // Configure additional PID options by calling `getController` here.
         this.elevatorSubsystem = elevatorSubsystem;
+        this.leds = leds;
         getController().setTolerance(1);
+    }
+
+    @Override
+    public void initialize() {
+        boolean isAbove = getController().getSetpoint() > elevatorSubsystem.getWinchPos();
+        leds.setPattern(isAbove ? "elevatorUp" : "elevatorDown");
     }
 
     // Returns true when the command should end.

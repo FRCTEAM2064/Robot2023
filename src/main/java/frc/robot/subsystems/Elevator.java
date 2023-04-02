@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants.ElevatorConstants;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase implements Loggable {
@@ -26,12 +27,12 @@ public class Elevator extends SubsystemBase implements Loggable {
     winchMotor = new CANSparkMax(ElevatorConstants.winchPort, MotorType.kBrushless);
     winchEncoder = winchMotor.getEncoder();
 
-    winchMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
-    winchMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
-    // winchMotor.setSoftLimit(SoftLimitDirection.kForward,
-    // ElevatorConstants.winchMax);
-    // winchMotor.setSoftLimit(SoftLimitDirection.kReverse,
-    // ElevatorConstants.winchMin);
+    winchMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    winchMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    winchMotor.setSoftLimit(SoftLimitDirection.kForward,
+        ElevatorConstants.winchMax);
+    winchMotor.setSoftLimit(SoftLimitDirection.kReverse,
+        ElevatorConstants.winchMin);
 
     gripperMotor = new CANSparkMax(ElevatorConstants.gripperPort,
         MotorType.kBrushless);
@@ -44,6 +45,8 @@ public class Elevator extends SubsystemBase implements Loggable {
         (float) ElevatorConstants.gripperMax);
     gripperMotor.setSoftLimit(SoftLimitDirection.kReverse,
         (float) ElevatorConstants.gripperMin);
+
+    SmartDashboard.putData(this);
   }
 
   public void setWinchSpeed(double speed) {

@@ -30,12 +30,11 @@ public class Intake extends SubsystemBase implements Loggable {
     intakeCompressor = new Compressor(20, PneumaticsModuleType.REVPH);
     intakeCompressor.enableDigital();
 
-    intakeSolenoid = new DoubleSolenoid(20, PneumaticsModuleType.REVPH, 0, 1);
+    intakeSolenoid = new DoubleSolenoid(20, PneumaticsModuleType.REVPH, 8, 9);
     intakeSolenoid.set(kOff);
 
     motor = new CANSparkMax(IntakeConstants.leftMotorPort, MotorType.kBrushless);
 
-    motor.setSmartCurrentLimit(30);
   }
 
   @Override
@@ -81,10 +80,6 @@ public class Intake extends SubsystemBase implements Loggable {
 
   public void hold() {
     motor.set(IntakeConstants.motorSpeed * 0.2);
-  }
-
-  public void setCurrentLimit(int limit) {
-    motor.setSmartCurrentLimit(limit);
   }
 
 }

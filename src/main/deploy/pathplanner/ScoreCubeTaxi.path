@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 2.247452718863771,
-        "y": 2.995542202889961
+        "x": 1.939188706502413,
+        "y": 1.0731832349081363
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.247452718863772,
-        "y": 2.995542202889961
+        "x": 1.9355501053703914,
+        "y": 1.0933119412444434
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -24,12 +24,12 @@
     },
     {
       "anchorPoint": {
-        "x": 3.4008912948381456,
-        "y": 2.974724524101826
+        "x": 5.668224277669788,
+        "y": 0.5430349809226019
       },
       "prevControl": {
-        "x": 2.4008912948381456,
-        "y": 2.974724524101826
+        "x": 5.099299485764462,
+        "y": 0.7987633633142908
       },
       "nextControl": null,
       "holonomicAngle": 0,
@@ -38,14 +38,19 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [
-          "balance"
-        ],
-        "executionBehavior": "parallel",
+        "names": [],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.0,
+      "names": [
+        "gripper_cube"
+      ]
+    }
+  ]
 }

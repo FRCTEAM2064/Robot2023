@@ -45,41 +45,49 @@ public class RobotContainer implements Loggable {
                                 () -> -driverTurnJoystick.getRawAxis(0), // turning speed
                                 () -> !driverJoystick.getRawButton(1), // field oriented button
                                 () -> driverTurnJoystick.getRawButton(1), leds));
+                configureButtonBindings();
                 elevatorSubsystem.setDefaultCommand(
                                 new ElevatorJoystickCmd(elevatorSubsystem, leds, () -> pxnController.getPOV()));
-                configureButtonBindings();
 
-                SmartDashboard.putData("Raise Elevator High", new RaiseElevator(elevatorSubsystem, leds, 2));
-                SmartDashboard.putData("Raise Elevator Low", new RaiseElevator(elevatorSubsystem, leds, 1));
-                SmartDashboard.putData("Raise Elevator Ground", new RaiseElevator(elevatorSubsystem, leds, 0));
-                SmartDashboard.putData("Lower Elevator", new LowerElevator(elevatorSubsystem, leds));
-                SmartDashboard.putData("Start Intake", new InstantCommand(() -> intakeSubsystem.clean()));
-                SmartDashboard.putData("Reverse Intake", new InstantCommand(() -> intakeSubsystem.reverse()));
-                SmartDashboard.putData("Stop Intake", new InstantCommand(() -> intakeSubsystem.stopMotors()));
-                SmartDashboard.putData("Ready Elevator", new ReadyElevator(elevatorSubsystem));
-                SmartDashboard.putData("Release Gripper", new ReleaseGripper(elevatorSubsystem));
-                SmartDashboard.putData("Gripper Cone", new PinchGripper(elevatorSubsystem,
+                SmartDashboard.putData("Buttons/Raise Level 2", new RaiseElevator(elevatorSubsystem, leds, 2));
+                SmartDashboard.putData("Buttons/Raise Level 1", new RaiseElevator(elevatorSubsystem, leds, 1));
+                SmartDashboard.putData("Buttons/Raise Ground Level", new RaiseElevator(elevatorSubsystem, leds, 0));
+                SmartDashboard.putData("Buttons/Lower", new LowerElevator(elevatorSubsystem, leds));
+                SmartDashboard.putData("Buttons/Start Intake", new InstantCommand(() -> intakeSubsystem.clean()));
+                SmartDashboard.putData("Buttons/Reverse Intake", new InstantCommand(() -> intakeSubsystem.reverse()));
+                SmartDashboard.putData("Buttons/Stop Intake", new InstantCommand(() -> intakeSubsystem.stopMotors()));
+                SmartDashboard.putData("Buttons/Ready", new ReadyElevator(elevatorSubsystem, leds));
+                SmartDashboard.putData("Buttons/Release", new ReleaseGripper(elevatorSubsystem));
+                SmartDashboard.putData("Buttons/Gripper Cone", new PinchGripper(elevatorSubsystem,
                                 false));
-                SmartDashboard.putData("Gripper Cube", new PinchGripper(elevatorSubsystem,
+                SmartDashboard.putData("Buttons/Gripper Cube", new PinchGripper(elevatorSubsystem,
                                 true));
+        }
+
+        public void teleopInit() {
+
         }
 
         private void configureButtonBindings() {
                 new JoystickButton(driverTurnJoystick, 2)
                                 .onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading(), swerveSubsystem));
-
-                new JoystickButton(driverJoystick, 8).whileTrue(new Balance(swerveSubsystem, leds));
                 new JoystickButton(driverJoystick, 1)
                                 .whileTrue(new StartIntake(intakeSubsystem, treadmill))
                                 .onFalse(new StopIntake(intakeSubsystem, treadmill));
+                new JoystickButton(driverJoystick, 8).whileTrue(new Balance(swerveSubsystem, leds));
 
+                new JoystickButton(pxnController, pxnButtons.L1)
+                                .whileTrue(new RaiseElevator(elevatorSubsystem, leds, 2));
                 new JoystickButton(pxnController, pxnButtons.X)
-                                .onTrue(new PinchGripper(elevatorSubsystem, true));
+                                .whileTrue(new RaiseElevator(elevatorSubsystem, leds, 1));
                 new JoystickButton(pxnController, pxnButtons.Y)
-                                .onTrue(new PinchGripper(elevatorSubsystem, false));
+                                .whileTrue(new RaiseElevator(elevatorSubsystem, leds, 0));
+                new JoystickButton(pxnController, pxnButtons.R1).onTrue(new DropAndLower(elevatorSubsystem, leds));
 
-                new JoystickButton(pxnController, pxnButtons.R1)
-                                .whileTrue(new InstantCommand(() -> intakeSubsystem.reverse(), intakeSubsystem));
+                new JoystickButton(pxnController, pxnButtons.B)
+                                .onTrue(new PinchGripper(elevatorSubsystem, false));
+                new JoystickButton(pxnController, pxnButtons.A)
+                                .onTrue(new PinchGripper(elevatorSubsystem, true));
 
         }
 
@@ -92,9 +100,14 @@ public class RobotContainer implements Loggable {
                 eventMap.put("eject",
                                 new SequentialCommandGroup(
                                                 new InstantCommand(() -> intakeSubsystem.reverse(), intakeSubsystem),
-                                                new WaitCommand(5), new InstantCommand(
+                                                new WaitCommand(1), new InstantCommand(
                                                                 () -> intakeSubsystem.stopIntake(), intakeSubsystem)));
                 eventMap.put("balance", new Balance(swerveSubsystem, leds));
+                eventMap.put("elevator_high", new RaiseElevator(elevatorSubsystem, leds, 2));
+                eventMap.put("elevator_mid", new RaiseElevator(elevatorSubsystem, leds, 1));
+                eventMap.put("elevator_low", new RaiseElevator(elevatorSubsystem, leds, 0));
+                eventMap.put("gripper_cube", new PinchGripper(elevatorSubsystem, true));
+                eventMap.put("drop_and_lower", new DropAndLower(elevatorSubsystem, leds));
 
                 PathPlannerTrajectory path = PathPlanner.loadPath(pathName, AutoConstants.kMaxSpeedMetersPerSecond,
                                 AutoConstants.kMaxAccelerationMetersPerSecondSquared);
@@ -107,7 +120,7 @@ public class RobotContainer implements Loggable {
                                 swerveSubsystem::setModuleStates,
                                 eventMap,
                                 true,
-                                swerveSubsystem);
-                return builder.fullAuto(path);
+                                swerveSubsystem, leds, elevatorSubsystem);
+                return new InstantCommand(() -> swerveSubsystem.zeroHeading()).andThen(builder.fullAuto(path));
         }
 }

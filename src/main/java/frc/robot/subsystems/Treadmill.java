@@ -18,8 +18,9 @@ public class Treadmill extends SubsystemBase {
   /** Creates a new Treadmill. */
   public Treadmill() {
     motor = new CANSparkMax(TreadmillConstants.treadmillId, MotorType.kBrushless);
-    SmartDashboard.putData("Start Treadmill", new InstantCommand(() -> startTreadmill()));
-    SmartDashboard.putData("Stop Treadmill", new InstantCommand(() -> stopTreadmill()));
+    SmartDashboard.putData("Buttons/Start Treadmill", new InstantCommand(() -> startTreadmill()));
+    SmartDashboard.putData("Buttons/Stop Treadmill", new InstantCommand(() -> stopTreadmill()));
+    SmartDashboard.putData("Buttons/Reverse Treadmill", new InstantCommand(() -> reverseTreadmill()));
   }
 
   public void startTreadmill() {

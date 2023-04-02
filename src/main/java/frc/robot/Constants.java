@@ -54,7 +54,7 @@ public final class Constants implements Loggable {
 
         public static final boolean kFrontLeftDriveEncoderReversed = true;
         public static final boolean kBackLeftDriveEncoderReversed = false;
-        public static final boolean kFrontRightDriveEncoderReversed = false;
+        public static final boolean kFrontRightDriveEncoderReversed = true;
         public static final boolean kBackRightDriveEncoderReversed = true;
 
         public static final int kFrontLeftDriveAbsoluteEncoderPort = 1;
@@ -67,10 +67,10 @@ public final class Constants implements Loggable {
         public static final boolean kFrontRightDriveAbsoluteEncoderReversed = false;
         public static final boolean kBackRightDriveAbsoluteEncoderReversed = false;
 
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 5.16;
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 1.76;
-        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 0.06;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 1.57;
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 4.07;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 1.12;
+        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 3.20;
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 1.55;
 
         public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
@@ -123,18 +123,18 @@ public final class Constants implements Loggable {
         public static final int kDriverRotAxis = 4;
         public static final int kDriverFieldOrientedButtonIdx = 1;
 
-        public static final double kDeadband = 0.05;
+        public static final double kDeadband = 0.1;
     }
 
     public static final class ElevatorConstants implements Loggable {
         public static final int winchPort = 12;
-        public static final double winchSpeed = 0.3;
+        public static final double winchSpeed = 0.7;
         public static final int gripperPort = 37;
         public static final double gripperSpeed = 0.2;
 
-        public static final float[] winchLevels = { 80, 160, 200 };
         public static final float winchMin = 0;
-        public static final float winchMax = 210;
+        public static final float winchMax = 367;
+        public static final float[] winchLevels = { 163, 299, winchMax };
         public static final float winchReady = 35;
         public static final double gripperMax = 0;
         public static final double gripperMin = -8.80;
@@ -184,6 +184,6 @@ public final class Constants implements Loggable {
 
     public static final class TreadmillConstants {
         public static final int treadmillId = 7;
-        public static final double treadmillSpeed = -0.2;
+        public static final double treadmillSpeed = -0.1;
     }
 }

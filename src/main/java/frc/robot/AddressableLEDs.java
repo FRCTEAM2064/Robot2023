@@ -108,13 +108,13 @@ public class AddressableLEDs {
 
     }
 
-    public void breathe(Color8Bit color) {
+    public void breathe(Color8Bit color, boolean enabled) {
         if (state.get("state") != "breathe") {
             state.clear();
             state.put("state", "breathe");
         }
 
-        double amplitude = .14 * (1 + Math.sin(timer.get())) / 2 + .01;
+        double amplitude = (enabled ? 0.74 : 0.04) * (1 + Math.sin(timer.get())) / 2 + .01;
 
         double red = (double) amplitude * color.red / 100;
         double green = (double) amplitude * color.green / 100;

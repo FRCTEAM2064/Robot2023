@@ -40,11 +40,12 @@ public class ElevatorJoystickCmd extends CommandBase implements Loggable {
   public void execute() {
     SmartDashboard.putNumber("POV", pxnPOVfunction.get());
     if (pxnPOVfunction.get() == -1) {
-      leds.setPattern("pattern");
+      if (leds.getPattern() == "elevatorUp" || leds.getPattern() == "elevatorDown") {
+        leds.setPattern("pattern");
+      }
       elevatorSubsystem.stopWinch();
     }
     Integer val = pxnPOVfunction.get();
-    boolean neg = val >= 180;
     if (val == 0) {
       leds.setPattern("elevatorUp");
       elevatorSubsystem.raiseElevator();

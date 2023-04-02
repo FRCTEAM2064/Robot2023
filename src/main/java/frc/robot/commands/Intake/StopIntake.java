@@ -25,8 +25,7 @@ public class StopIntake extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new InstantCommand(() -> intakeSubsystem.retract()),
-        new InstantCommand(() -> intakeSubsystem.stopIntake()),
-        new InstantCommand(() -> treadmillSubsystem.stopTreadmill()));
+        new InstantCommand(() -> intakeSubsystem.stopIntake()));
 
     addRequirements(intakeSubsystem, treadmillSubsystem);
   }
