@@ -54,7 +54,7 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
 
     private final AHRS gyro = new AHRS(SPI.Port.kMXP);
     SwerveModulePosition[] positions = {
-            frontLeft.getPosition(), frontRight.getPosition(), null, backRight.getPosition() };
+            frontLeft.getPosition(), frontRight.getPosition(), backRight.getPosition(), backRight.getPosition() };
     private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics,
             new Rotation2d(0), positions);
 
@@ -86,7 +86,7 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
 
     public void resetOdometry(Pose2d pose) {
         SwerveModulePosition[] positions = {
-                frontLeft.getPosition(), frontRight.getPosition(), null, backRight.getPosition() };
+                frontLeft.getPosition(), frontRight.getPosition(), backRight.getPosition(), backRight.getPosition() };
         odometer.update(getRotation2d(), positions);
         odometer.resetPosition(getRotation2d(), positions, pose);
     }
@@ -94,7 +94,7 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
     @Override
     public void periodic() {
         SwerveModulePosition[] positions = {
-                frontLeft.getPosition(), frontRight.getPosition(), null, backRight.getPosition() };
+                frontLeft.getPosition(), frontRight.getPosition(), backRight.getPosition(), backRight.getPosition() };
         odometer.update(getRotation2d(), positions);
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
@@ -102,8 +102,7 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
         double[] arr = getAbsolutePositions();
         SmartDashboard.putNumber("Front Left Turn Encoder", arr[0]);
         SmartDashboard.putNumber("Front Right Turn Encoder", arr[1]);
-        SmartDashboard.putNumber("Back Left Turn Encoder", arr[2]);
-        SmartDashboard.putNumber("Back Right Turn Encoder", arr[3]);
+        SmartDashboard.putNumber("Back Right Turn Encoder", arr[2]);
 
         SmartDashboard.putNumber("Pitch", gyro.getPitch());
         SmartDashboard.putNumber("Roll", gyro.getRoll());
