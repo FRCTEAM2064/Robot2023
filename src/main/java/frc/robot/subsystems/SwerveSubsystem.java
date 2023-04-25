@@ -34,14 +34,14 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
             DriveConstants.kFrontRightDriveAbsoluteEncoderOffsetRad,
             DriveConstants.kFrontRightDriveAbsoluteEncoderReversed);
 
-    private final SwerveModule backLeft = new SwerveModule(
-            DriveConstants.kBackLeftDriveMotorPort,
-            DriveConstants.kBackLeftTurningMotorPort,
-            DriveConstants.kBackLeftDriveEncoderReversed,
-            DriveConstants.kBackLeftTurningEncoderReversed,
-            DriveConstants.kBackLeftDriveAbsoluteEncoderPort,
-            DriveConstants.kBackLeftDriveAbsoluteEncoderOffsetRad,
-            DriveConstants.kBackLeftDriveAbsoluteEncoderReversed);
+    // private final SwerveModule backLeft = new SwerveModule(
+    // DriveConstants.kBackLeftDriveMotorPort,
+    // DriveConstants.kBackLeftTurningMotorPort,
+    // DriveConstants.kBackLeftDriveEncoderReversed,
+    // DriveConstants.kBackLeftTurningEncoderReversed,
+    // DriveConstants.kBackLeftDriveAbsoluteEncoderPort,
+    // DriveConstants.kBackLeftDriveAbsoluteEncoderOffsetRad,
+    // DriveConstants.kBackLeftDriveAbsoluteEncoderReversed);
 
     private final SwerveModule backRight = new SwerveModule(
             DriveConstants.kBackRightDriveMotorPort,
@@ -54,7 +54,7 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
 
     private final AHRS gyro = new AHRS(SPI.Port.kMXP);
     SwerveModulePosition[] positions = {
-            frontLeft.getPosition(), frontRight.getPosition(), backLeft.getPosition(), backRight.getPosition() };
+            frontLeft.getPosition(), frontRight.getPosition(), null, backRight.getPosition() };
     private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics,
             new Rotation2d(0), positions);
 
@@ -86,7 +86,7 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
 
     public void resetOdometry(Pose2d pose) {
         SwerveModulePosition[] positions = {
-                frontLeft.getPosition(), frontRight.getPosition(), backLeft.getPosition(), backRight.getPosition() };
+                frontLeft.getPosition(), frontRight.getPosition(), null, backRight.getPosition() };
         odometer.update(getRotation2d(), positions);
         odometer.resetPosition(getRotation2d(), positions, pose);
     }
@@ -94,7 +94,7 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
     @Override
     public void periodic() {
         SwerveModulePosition[] positions = {
-                frontLeft.getPosition(), frontRight.getPosition(), backLeft.getPosition(), backRight.getPosition() };
+                frontLeft.getPosition(), frontRight.getPosition(), null, backRight.getPosition() };
         odometer.update(getRotation2d(), positions);
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
@@ -113,7 +113,7 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
     public void stopModules() {
         frontLeft.stop();
         frontRight.stop();
-        backLeft.stop();
+        // backLeft.stop();
         backRight.stop();
     }
 
@@ -121,7 +121,7 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
         frontLeft.setDesiredState(desiredStates[0]);
         frontRight.setDesiredState(desiredStates[1]);
-        backLeft.setDesiredState(desiredStates[2]);
+        // backLeft.setDesiredState(desiredStates[2]);
         backRight.setDesiredState(desiredStates[3]);
     }
 
@@ -129,7 +129,7 @@ public class SwerveSubsystem extends SubsystemBase implements Loggable {
         return new double[] {
                 frontLeft.getAbsoluteEncoderRad(),
                 frontRight.getAbsoluteEncoderRad(),
-                backLeft.getAbsoluteEncoderRad(),
+                // backLeft.getAbsoluteEncoderRad(),
                 backRight.getAbsoluteEncoderRad()
         };
     }
