@@ -30,9 +30,6 @@ public class RobotContainer implements Loggable {
         private final LEDs leds = new LEDs();
         private final Treadmill treadmill = new Treadmill();
 
-        private final ElevatorConstants constants = new ElevatorConstants();
-        private final DriveConstants dConstants = new DriveConstants();
-
         private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
         private final Joystick driverTurnJoystick = new Joystick(OIConstants.kDriverTurnControllerPort);
         private final Joystick pxnController = new Joystick(OIConstants.kPXNControllerPort);
@@ -115,7 +112,7 @@ public class RobotContainer implements Loggable {
                                 swerveSubsystem::setModuleStates,
                                 eventMap,
                                 true,
-                                swerveSubsystem, leds, elevatorSubsystem);
+                                swerveSubsystem);
                 return new InstantCommand(() -> swerveSubsystem.zeroHeading()).andThen(builder.fullAuto(path));
         }
 }

@@ -44,8 +44,8 @@ public class Balance extends CommandBase {
       leds.setPattern("rainbow");
     }
 
-    double xSpeed = 3 * pitchDiff / 80;
-    double ySpeed = 3 * rollDiff / 80;
+    double xSpeed = 3 * pitchDiff / 100;
+    double ySpeed = 3 * rollDiff / 100;
 
     // System.out.println(roll);
 
