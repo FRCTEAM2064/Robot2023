@@ -57,11 +57,8 @@ public class RobotContainer implements Loggable {
                 SmartDashboard.putData("Buttons/Reverse Intake", new InstantCommand(() -> intakeSubsystem.reverse()));
                 SmartDashboard.putData("Buttons/Stop Intake", new InstantCommand(() -> intakeSubsystem.stopMotors()));
                 SmartDashboard.putData("Buttons/Ready", new ReadyElevator(elevatorSubsystem, leds));
-                SmartDashboard.putData("Buttons/Release", new ReleaseGripper(elevatorSubsystem));
-                SmartDashboard.putData("Buttons/Gripper Cone", new PinchGripper(elevatorSubsystem,
-                                false));
-                SmartDashboard.putData("Buttons/Gripper Cube", new PinchGripper(elevatorSubsystem,
-                                true));
+                SmartDashboard.putData("Buttons/Release", new InstantCommand(() -> elevatorSubsystem.releaseGripper()).withTimeout(2));
+                SmartDashboard.putData("Buttons/Suck", new InstantCommand(() -> elevatorSubsystem.pinchGripper()).withTimeout(2));
         }
 
         public void teleopInit() {
@@ -85,9 +82,7 @@ public class RobotContainer implements Loggable {
                 new JoystickButton(pxnController, pxnButtons.R1).onTrue(new DropAndLower(elevatorSubsystem, leds));
 
                 new JoystickButton(pxnController, pxnButtons.B)
-                                .onTrue(new PinchGripper(elevatorSubsystem, false));
-                new JoystickButton(pxnController, pxnButtons.A)
-                                .onTrue(new PinchGripper(elevatorSubsystem, true));
+                                .onTrue(new InstantCommand(() -> elevatorSubsystem.pinchGripper()).withTimeout(2));
 
         }
 
@@ -106,7 +101,7 @@ public class RobotContainer implements Loggable {
                 eventMap.put("elevator_high", new RaiseElevator(elevatorSubsystem, leds, 2));
                 eventMap.put("elevator_mid", new RaiseElevator(elevatorSubsystem, leds, 1));
                 eventMap.put("elevator_low", new RaiseElevator(elevatorSubsystem, leds, 0));
-                eventMap.put("gripper_cube", new PinchGripper(elevatorSubsystem, true));
+                eventMap.put("gripper_cube", new InstantCommand(() -> elevatorSubsystem.pinchGripper()).withTimeout(2));
                 eventMap.put("drop_and_lower", new DropAndLower(elevatorSubsystem, leds));
 
                 PathPlannerTrajectory path = PathPlanner.loadPath(pathName, AutoConstants.kMaxSpeedMetersPerSecond,

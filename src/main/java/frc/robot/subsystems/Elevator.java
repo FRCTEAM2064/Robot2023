@@ -20,7 +20,6 @@ public class Elevator extends SubsystemBase implements Loggable {
   private RelativeEncoder winchEncoder;
 
   private CANSparkMax gripperMotor;
-  private RelativeEncoder gripperEncoder;
 
   /** Creates a new Elevator. */
   public Elevator() {
@@ -36,15 +35,7 @@ public class Elevator extends SubsystemBase implements Loggable {
 
     gripperMotor = new CANSparkMax(ElevatorConstants.gripperPort,
         MotorType.kBrushless);
-    gripperEncoder = gripperMotor.getEncoder();
 
-    gripperMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
-    gripperMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
-
-    gripperMotor.setSoftLimit(SoftLimitDirection.kForward,
-        (float) ElevatorConstants.gripperMax);
-    gripperMotor.setSoftLimit(SoftLimitDirection.kReverse,
-        (float) ElevatorConstants.gripperMin);
 
     SmartDashboard.putData(this);
   }
@@ -81,15 +72,6 @@ public class Elevator extends SubsystemBase implements Loggable {
 
   public void stopGripper() {
     gripperMotor.set(0);
-  }
-
-  @Log
-  public double getGripperPos() {
-    return gripperEncoder.getPosition();
-  }
-
-  public void resetGripperPos() {
-    gripperEncoder.setPosition(0);
   }
 
   public void pinchGripper() {

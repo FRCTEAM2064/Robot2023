@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Elevator;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.LEDs;
@@ -17,10 +18,8 @@ public class DropAndLower extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ReleaseGripper(elevatorSubsystem),
-        new PinchGripper(elevatorSubsystem, true),
-        new LowerElevator(elevatorSubsystem, leds),
-        new ReleaseGripper(elevatorSubsystem));
+        new InstantCommand(() -> elevatorSubsystem.releaseGripper()).withTimeout(2),
+        new LowerElevator(elevatorSubsystem, leds));
 
     addRequirements(elevatorSubsystem);
   }
