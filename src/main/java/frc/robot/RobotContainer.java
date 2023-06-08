@@ -54,8 +54,8 @@ public class RobotContainer implements Loggable {
                 SmartDashboard.putData("Buttons/Reverse Intake", new InstantCommand(() -> intakeSubsystem.reverse()));
                 SmartDashboard.putData("Buttons/Stop Intake", new InstantCommand(() -> intakeSubsystem.stopMotors()));
                 SmartDashboard.putData("Buttons/Ready", new ReadyElevator(elevatorSubsystem, leds));
-                SmartDashboard.putData("Buttons/Release", new InstantCommand(() -> elevatorSubsystem.releaseGripper()).withTimeout(2));
-                SmartDashboard.putData("Buttons/Suck", new InstantCommand(() -> elevatorSubsystem.pinchGripper()).withTimeout(2));
+                SmartDashboard.putData("Buttons/Release", new ReleaseGripper(elevatorSubsystem));
+                SmartDashboard.putData("Buttons/Suck", new PinchGripper(elevatorSubsystem));
         }
 
         public void teleopInit() {

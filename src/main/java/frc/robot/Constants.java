@@ -127,7 +127,8 @@ public final class Constants implements Loggable {
     }
 
     public static final class ElevatorConstants implements Loggable {
-        public static final int winchPort = 12;
+        public static final int winchRightPort = 12;
+        public static final int winchLeftPort = 22;
         public static final double winchSpeed = 0.7;
         public static final int gripperPort = 37;
         public static final double gripperSpeed = 0.2;

@@ -6,21 +6,22 @@ package frc.robot.commands.Elevator;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.LEDs;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DropAndLower extends SequentialCommandGroup {
-  /** Creates a new DropAndLower. */
-  public DropAndLower(Elevator elevatorSubsystem, LEDs leds) {
+public class PinchGripper extends SequentialCommandGroup {
+  /** Creates a new ReleaseGripper. */
+  public PinchGripper(Elevator elevatorSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ReleaseGripper(elevatorSubsystem),
-        new LowerElevator(elevatorSubsystem, leds));
-
-    addRequirements(elevatorSubsystem);
+      new InstantCommand(()-> elevatorSubsystem.pinchGripper()), 
+      new WaitCommand(2),
+      new InstantCommand(() -> elevatorSubsystem.stopGripper())
+    );
   }
 }
+

@@ -16,25 +16,34 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase implements Loggable {
-  private CANSparkMax winchMotor;
-  private RelativeEncoder winchEncoder;
+  private CANSparkMax winchRightMotor;
+  private CANSparkMax winchLeftMotor;
+  
+  private RelativeEncoder winchRightEncoder;
+  private RelativeEncoder winchLeftEncoder;
 
   private CANSparkMax gripperMotor;
 
   /** Creates a new Elevator. */
   public Elevator() {
-    winchMotor = new CANSparkMax(ElevatorConstants.winchPort, MotorType.kBrushless);
-    winchEncoder = winchMotor.getEncoder();
+    winchRightMotor = new CANSparkMax(ElevatorConstants.winchRightPort, MotorType.kBrushless);
+    winchLeftMotor = new CANSparkMax(ElevatorConstants.winchLeftPort, MotorType.kBrushless);
+    winchRightEncoder = winchRightMotor.getEncoder();
+    winchLeftEncoder = winchLeftMotor.getEncoder();
 
-    winchMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
-    winchMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
-    winchMotor.setSoftLimit(SoftLimitDirection.kForward,
+
+
+    winchLeftMotor.follow(winchRightMotor, true);
+    winchRightMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    winchRightMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    winchRightMotor.setSoftLimit(SoftLimitDirection.kForward,
         ElevatorConstants.winchMax);
-    winchMotor.setSoftLimit(SoftLimitDirection.kReverse,
+        winchRightMotor.setSoftLimit(SoftLimitDirection.kReverse,
         ElevatorConstants.winchMin);
 
     gripperMotor = new CANSparkMax(ElevatorConstants.gripperPort,
         MotorType.kBrushless);
+  }
 
 
   @Override
@@ -43,20 +52,21 @@ public class Elevator extends SubsystemBase implements Loggable {
   }
 
   public void setWinchSpeed(double speed) {
-    winchMotor.set(speed);
+    winchRightMotor.set(speed);
   }
 
   public void stopWinch() {
-    winchMotor.set(0);
+    winchRightMotor.set(0);
   }
 
   @Log
   public double getWinchPos() {
-    return winchEncoder.getPosition();
+    return winchRightEncoder.getPosition();
   }
 
   public void resetWinchPos() {
-    winchEncoder.setPosition(0);
+    winchRightEncoder.setPosition(0);
+    winchLeftEncoder.setPosition(0);
   }
 
   public void raiseElevator() {
