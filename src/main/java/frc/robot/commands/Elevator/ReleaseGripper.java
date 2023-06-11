@@ -19,7 +19,7 @@ public class ReleaseGripper extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(()-> elevatorSubsystem.releaseGripper()), 
-      new WaitCommand(2),
+      new WaitCommand(.5),
       new InstantCommand(() -> elevatorSubsystem.stopGripper())
     );
   }

@@ -2,11 +2,14 @@ package frc.robot;
 
 import java.util.HashMap;
 
+import javax.management.InstanceAlreadyExistsException;
+
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
+import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,7 +31,6 @@ public class RobotContainer implements Loggable {
         private final Intake intakeSubsystem = new Intake();
         private final Elevator elevatorSubsystem = new Elevator();
         private final LEDs leds = new LEDs();
-        private final Treadmill treadmill = new Treadmill();
 
         private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
         private final Joystick driverTurnJoystick = new Joystick(OIConstants.kDriverTurnControllerPort);
@@ -54,7 +56,7 @@ public class RobotContainer implements Loggable {
                 SmartDashboard.putData("Buttons/Reverse Intake", new InstantCommand(() -> intakeSubsystem.reverse()));
                 SmartDashboard.putData("Buttons/Stop Intake", new InstantCommand(() -> intakeSubsystem.stopMotors()));
                 SmartDashboard.putData("Buttons/Ready", new ReadyElevator(elevatorSubsystem, leds));
-                SmartDashboard.putData("Buttons/Release", new ReleaseGripper(elevatorSubsystem));
+                SmartDashboard.putData("Buttons/Release", new SequentialCommandGroup(new InstantCommand(() -> elevatorSubsystem.setVoltageLimit(80)), new ReleaseGripper(elevatorSubsystem)));
                 SmartDashboard.putData("Buttons/Suck", new PinchGripper(elevatorSubsystem));
         }
 
@@ -66,8 +68,8 @@ public class RobotContainer implements Loggable {
                 new JoystickButton(driverTurnJoystick, 2)
                                 .onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading(), swerveSubsystem));
                 new JoystickButton(driverJoystick, 1)
-                                .whileTrue(new StartIntake(intakeSubsystem, treadmill))
-                                .onFalse(new StopIntake(intakeSubsystem, treadmill));
+                                .whileTrue(new StartIntake(intakeSubsystem))
+                                .onFalse(new StopIntake(intakeSubsystem));
                 new JoystickButton(driverJoystick, 8).whileTrue(new Balance(swerveSubsystem, leds));
 
                 new JoystickButton(pxnController, pxnButtons.L1)
@@ -79,7 +81,8 @@ public class RobotContainer implements Loggable {
                 new JoystickButton(pxnController, pxnButtons.R1).onTrue(new DropAndLower(elevatorSubsystem, leds));
 
                 new JoystickButton(pxnController, pxnButtons.B)
-                                .onTrue(new InstantCommand(() -> elevatorSubsystem.pinchGripper()).withTimeout(2));
+                                .whileTrue(new InstantCommand(() -> intakeSubsystem.reverse())).
+                                onFalse(new InstantCommand(() -> intakeSubsystem.stopMotors()));
 
         }
 

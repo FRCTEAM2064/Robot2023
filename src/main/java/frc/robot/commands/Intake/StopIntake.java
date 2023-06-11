@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Treadmill;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -19,7 +18,7 @@ public class StopIntake extends SequentialCommandGroup {
   /** Creates a new StopIntake. */
   Intake intakeSubsystem;
 
-  public StopIntake(Intake intakeSubsystem, Treadmill treadmillSubsystem) {
+  public StopIntake(Intake intakeSubsystem ) {
     this.intakeSubsystem = intakeSubsystem;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -27,6 +26,6 @@ public class StopIntake extends SequentialCommandGroup {
         new InstantCommand(() -> intakeSubsystem.retract()),
         new InstantCommand(() -> intakeSubsystem.stopIntake()));
 
-    addRequirements(intakeSubsystem, treadmillSubsystem);
+    addRequirements(intakeSubsystem);
   }
 }

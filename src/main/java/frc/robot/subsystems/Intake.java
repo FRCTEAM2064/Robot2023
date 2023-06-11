@@ -75,7 +75,7 @@ public class Intake extends SubsystemBase implements Loggable {
   }
 
   public void reverse() {
-    motor.set(-1);
+    motor.set(-0.6);
   }
 
   public void hold() {

@@ -96,4 +96,8 @@ public class Elevator extends SubsystemBase implements Loggable {
     setGripperSpeed(ElevatorConstants.gripperSpeed);
   }
 
+  public void setVoltageLimit(int volts){
+    gripperMotor.setSmartCurrentLimit(volts);
+  }
+
 }

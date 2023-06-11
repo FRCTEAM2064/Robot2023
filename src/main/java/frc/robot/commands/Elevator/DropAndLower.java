@@ -18,6 +18,7 @@ public class DropAndLower extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new InstantCommand(() -> elevatorSubsystem.setVoltageLimit(80)),
         new ReleaseGripper(elevatorSubsystem),
         new LowerElevator(elevatorSubsystem, leds));
 

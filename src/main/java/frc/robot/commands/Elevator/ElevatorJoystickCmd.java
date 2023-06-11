@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Elevator;
+
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.Pancake;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
@@ -21,7 +23,7 @@ public class ElevatorJoystickCmd extends CommandBase implements Loggable {
   private final LEDs leds;
 
   /** Creates a new ElevatorJoystickCmd. */
-  public ElevatorJoystickCmd(Elevator elevatorSubsystem, LEDs leds, Supplier<Integer> pxnPOVFunction) {
+  public ElevatorJoystickCmd(Elevator elevatorSubsystem, LEDs leds, Supplier<Integer> pxnPOVFunction){
     // Use addRequirements() here to declare subsystem dependencies.
     this.elevatorSubsystem = elevatorSubsystem;
     this.pxnPOVfunction = pxnPOVFunction;
